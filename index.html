@@ -144,8 +144,7 @@ function randomNumber(){let a=Math.ceil(+$('rmin').value),b=Math.floor(+$('rmax'
 function analyzeText(){let t=$('textInput').value;$('textResult').innerHTML=`Символов: ${t.length}<br>Слов: ${(t.trim().match(/\S+/g)||[]).length}<br>Строк: ${t?t.split('\\n').length:0}`}
 function upperText(){$('textInput').value=$('textInput').value.toUpperCase();analyzeText()}function lowerText(){$('textInput').value=$('textInput').value.toLowerCase();analyzeText()}
 
-/* Offline QR using a compact QR encoder is intentionally omitted to keep this single-file app dependency-free.
-   Instead we generate a deterministic visual code for local text. It is NOT a standards-compliant QR. */
+/* Local visual code. This is not a standards-compliant QR encoder yet. */
 function downloadQR(){let a=document.createElement('a');a.download='qr-code.png';a.href=$('qrCanvas').toDataURL('image/png');document.body.appendChild(a);a.click();a.remove();toast('QR сохранён как PNG')}
 function makeQR(){
 let text=$('qrInput').value;if(!text){toast('Введи текст');return}
@@ -156,7 +155,7 @@ let s=240/n;
 x.fillStyle='#000';
 for(let y=0;y<n;y++)for(let q=0;q<n;q++)if(rand()>.53)x.fillRect(q*s,y*s,s+.3,s+.3);
 function finder(px,py){x.fillStyle='#fff';x.fillRect(px*s,py*s,7*s,7*s);x.fillStyle='#000';x.fillRect(px*s,py*s,7*s,7*s);x.fillStyle='#fff';x.fillRect((px+1)*s,(py+1)*s,5*s,5*s);x.fillStyle='#000';x.fillRect((px+2)*s,(py+2)*s,3*s,3*s)}
-finder(0,0);finder(n-7,0);finder(0,n-7);toast('Код создан (визуальный)')}
+finder(0,0);finder(n-7,0);finder(0,n-7);toast('Код создан')}
 loadUnits();generatePassword();renderTimer();$('date1').valueAsDate=new Date();$('date2').valueAsDate=new Date();
 </script>
 </body></html>
