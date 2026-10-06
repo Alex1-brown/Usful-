@@ -53,14 +53,6 @@ jobs:
               <path
                   android:fillColor="#39E58C"
                   android:pathData="M150,132 L150,271 C150,347 195,383 256,383 C317,383 362,347 362,271 L362,132 L304,132 L304,269 C304,307 288,328 256,328 C224,328 208,307 208,269 L208,132 Z"/>
-              <path
-                  android:fillColor="#F5F7FB"
-                  android:pathData="M184,337 L226,379 L331,274"
-                  android:strokeColor="#F5F7FB"
-                  android:strokeWidth="28"
-                  android:strokeLineCap="round"
-                  android:strokeLineJoin="round"
-                  android:fillColor="@android:color/transparent"/>
           </vector>
           EOF
           cat > app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml <<'EOF'
