@@ -26,82 +26,82 @@ small{color:var(--muted)}.toast{position:fixed;bottom:22px;left:50%;transform:tr
 </head>
 <body>
 <header>
-<h1>⚡ Pocket Utility</h1><p id="subtitle">Useful tools in one place</p><div id="languageSwitcher" style="margin-top:10px"><button class="action secondary" style="width:auto;margin:0 6px 0 0;padding:8px 12px" onclick="setLanguage('en')">English</button><button class="action secondary" style="width:auto;margin:0;padding:8px 12px" onclick="setLanguage('ru')">Русский</button></div>
+<h1>⚡ Pocket Utility</h1><p id="subtitle" data-i18n="subtitle">Useful tools in one place</p><div id="languageSwitcher" style="margin-top:10px"><button class="action secondary" style="width:auto;margin:0 6px 0 0;padding:8px 12px" onclick="setLanguage('en')">English</button><button class="action secondary" style="width:auto;margin:0;padding:8px 12px" onclick="setLanguage('ru')">Русский</button></div>
 </header>
 
 <main>
 <section id="home" class="screen active">
 <div class="grid">
-<div class="card tool" onclick="openTool('password')"><div class="icon">🔐</div><b>Password</b><span>Generator</span></div>
-<div class="card tool" onclick="openTool('calculator')"><div class="icon">🧮</div><b>Calculator</b><span>Quick calculations</span></div>
-<div class="card tool" onclick="openTool('convert')"><div class="icon">📏</div><b>Converter</b><span>Length, weight, temperature</span></div>
-<div class="card tool" onclick="openTool('notes')"><div class="icon">📝</div><b>Notes</b><span>Auto-save</span></div>
-<div class="card tool" onclick="openTool('timer')"><div class="icon">⏱️</div><b>Timer</b><span>Countdown</span></div>
-<div class="card tool" onclick="openTool('stopwatch')"><div class="icon">⏱</div><b>Stopwatch</b><span>Precise time</span></div>
-<div class="card tool" onclick="openTool('date')"><div class="icon">📅</div><b>Dates</b><span>Date difference</span></div>
-<div class="card tool" onclick="openTool('random')"><div class="icon">🎲</div><b>Random</b><span>Numbers and choices</span></div>
-<div class="card tool" onclick="openTool('text')"><div class="icon">🔤</div><b>Text</b><span>Counter and case</span></div>
-<div class="card tool" onclick="openTool('qr')"><div class="icon">🔲</div><b>QR</b><span>Generation</span></div>
+<div class="card tool" onclick="openTool('password')"><div class="icon">🔐</div><b data-i18n="password">Password</b><span data-i18n="passwordDesc">Generator</span></div>
+<div class="card tool" onclick="openTool('calculator')"><div class="icon">🧮</div><b data-i18n="calculator">Calculator</b><span data-i18n="calculatorDesc">Quick calculations</span></div>
+<div class="card tool" onclick="openTool('convert')"><div class="icon">📏</div><b data-i18n="converter">Converter</b><span data-i18n="converterDesc">Length, weight, temperature</span></div>
+<div class="card tool" onclick="openTool('notes')"><div class="icon">📝</div><b data-i18n="notes">Notes</b><span data-i18n="notesDesc">Auto-save</span></div>
+<div class="card tool" onclick="openTool('timer')"><div class="icon">⏱️</div><b data-i18n="timer">Timer</b><span data-i18n="timerDesc">Countdown</span></div>
+<div class="card tool" onclick="openTool('stopwatch')"><div class="icon">⏱</div><b data-i18n="stopwatch">Stopwatch</b><span data-i18n="stopwatchDesc">Precise time</span></div>
+<div class="card tool" onclick="openTool('date')"><div class="icon">📅</div><b data-i18n="dates">Dates</b><span data-i18n="datesDesc">Date difference</span></div>
+<div class="card tool" onclick="openTool('random')"><div class="icon">🎲</div><b data-i18n="random">Random</b><span data-i18n="randomDesc">Numbers and choices</span></div>
+<div class="card tool" onclick="openTool('text')"><div class="icon">🔤</div><b data-i18n="text">Text</b><span data-i18n="textDesc">Counter and case</span></div>
+<div class="card tool" onclick="openTool('qr')"><div class="icon">🔲</div><b data-i18n="qr">QR</b><span data-i18n="qrDesc">Generation</span></div>
 </div>
-<div class="card"><small>All main functions work locally. QR generation uses the built-in Canvas and does not send text to a server.</small></div>
+<div class="card"><small data-i18n="localInfo">All main functions work locally. QR generation uses the built-in Canvas and does not send text to a server.</small></div>
 </section>
 
 <section id="password" class="screen">
-<button class="back" onclick="home()">← All tools</button><div class="card"><h2>🔐 Generator паролей</h2>
-<label>Length: <b id="plenVal">16</b></label><input id="plen" type="range" min="4" max="64" value="16" oninput="plenVal.textContent=this.value">
-<label><input id="lower" type="checkbox" checked> Lowercase letters</label>
-<label><input id="upper" type="checkbox" checked> Uppercase letters</label>
-<label><input id="nums" type="checkbox" checked> Numbers</label>
-<label><input id="symbols" type="checkbox" checked> Symbols</label>
-<button class="action" onclick="generatePassword()">Generate</button><div id="passResult" class="result"></div>
-<button class="action secondary" onclick="copyText('passResult')">Copy</button></div></section>
+<button class="back" data-i18n="back" onclick="home()">← All tools</button><div class="card"><h2>🔐 <span data-i18n="generatorPassword">Password Generator</span></h2>
+<label><span data-i18n="length">Length:</span> <b id="plenVal">16</b></label><input id="plen" type="range" min="4" max="64" value="16" oninput="plenVal.textContent=this.value">
+<label><input id="lower" type="checkbox" checked> <span data-i18n="lower">Lowercase letters</span></label>
+<label><input id="upper" type="checkbox" checked> <span data-i18n="upper">Uppercase letters</span></label>
+<label><input id="nums" type="checkbox" checked> <span data-i18n="numbers">Numbers</span></label>
+<label><input id="symbols" type="checkbox" checked> <span data-i18n="symbols">Symbols</span></label>
+<button class="action" data-i18n="generate" onclick="generatePassword()">Generate</button><div id="passResult" class="result"></div>
+<button class="action secondary" data-i18n="copy" onclick="copyText('passResult')">Copy</button></div></section>
 
 <section id="calculator" class="screen">
-<button class="back" onclick="home()">← All tools</button><div class="card"><h2>🧮 Calculator</h2>
-<input id="calc" type="text" inputmode="none" readonly autocomplete="off" placeholder="Enter an expression using the buttons below">
+<button class="back" data-i18n="back" onclick="home()">← All tools</button><div class="card"><h2>🧮 <span data-i18n="calculator">Calculator</span></h2>
+<input id="calc" type="text" inputmode="none" readonly autocomplete="off" data-i18n-placeholder="enterExpression" placeholder="Enter an expression using the buttons below">
 <div id="calcResult" class="result" style="margin-top:10px;margin-bottom:10px;min-height:48px">0</div>
 <div class="calcpad"><button onclick="calcKey('7')">7</button><button onclick="calcKey('8')">8</button><button onclick="calcKey('9')">9</button><button onclick="calcKey('/')">÷</button><button onclick="calcKey('4')">4</button><button onclick="calcKey('5')">5</button><button onclick="calcKey('6')">6</button><button onclick="calcKey('*')">×</button><button onclick="calcKey('1')">1</button><button onclick="calcKey('2')">2</button><button onclick="calcKey('3')">3</button><button onclick="calcKey('-')">−</button><button onclick="calcKey('0')">0</button><button onclick="calcKey('.')">.</button><button onclick="calcKey('%')">%</button><button onclick="calcKey('+')">+</button><button onclick="calcKey('(')">(</button><button onclick="calcKey(')')">)</button><button onclick="backspaceCalc()">⌫</button><button onclick="clearCalc()">C</button><button onclick="calculate()">=</button></div></div></section>
 
 <section id="convert" class="screen">
-<button class="back" onclick="home()">← All tools</button><div class="card"><h2>📏 Converter</h2>
-<select id="convType" onchange="convert()"><option value="length">Длина</option><option value="weight">Toес</option><option value="temp">Температура</option></select>
-<div class="row"><div><label>From</label><select id="from" onchange="convert()"></select></div><div><label>To</label><select id="to" onchange="convert()"></select></div></div>
-<label>Value</label><input id="convValue" type="number" value="1" oninput="convert()"><div id="convResult" class="result"></div></div></section>
+<button class="back" data-i18n="back" onclick="home()">← All tools</button><div class="card"><h2>📏 <span data-i18n="converter">Converter</span></h2>
+<select id="convType" onchange="convert()"><option value="length" data-i18n="lengthUnit">Length</option><option value="weight" data-i18n="weight">Weight</option><option value="temp" data-i18n="temperature">Temperature</option></select>
+<div class="row"><div><label data-i18n="from">From</label><select id="from" onchange="convert()"></select></div><div><label data-i18n="to">To</label><select id="to" onchange="convert()"></select></div></div>
+<label data-i18n="value">Value</label><input id="convValue" type="number" value="1" oninput="convert()"><div id="convResult" class="result"></div></div></section>
 
 <section id="notes" class="screen">
-<button class="back" onclick="home()">← All tools</button><div class="card"><h2>📝 Notes</h2>
-<textarea id="note" placeholder="Write something..."></textarea>
-<button class="action" onclick="saveNote()">Save</button><button class="action secondary" onclick="copyText('note')">Copy</button><button class="action danger" onclick="clearNote()">Clear</button>
+<button class="back" data-i18n="back" onclick="home()">← All tools</button><div class="card"><h2>📝 <span data-i18n="notes">Notes</span></h2>
+<textarea id="note" data-i18n-placeholder="write" placeholder="Write something..."></textarea>
+<button class="action" data-i18n="save" onclick="saveNote()">Save</button><button class="action secondary" data-i18n="copy" onclick="copyText('note')">Copy</button><button class="action danger" data-i18n="clear" onclick="clearNote()">Clear</button>
 <small id="saved"></small></div></section>
 
-<section id="timer" class="screen"><button class="back" onclick="home()">← All tools</button><div class="card"><h2>⏱️ Timer</h2><div id="timerDisplay" class="big">05:00</div><div class="row"><input id="minutes" type="number" min="0" value="5" placeholder="Min"><input id="seconds" type="number" min="0" max="59" value="0" placeholder="Sec"></div><button class="action" id="timerBtn" onclick="toggleTimer()">Start</button><button class="action secondary" onclick="pauseTimer()">Pause</button><button class="action danger" onclick="resetTimer()">Reset</button></div></section>
+<section id="timer" class="screen"><button class="back" data-i18n="back" onclick="home()">← All tools</button><div class="card"><h2>⏱️ <span data-i18n="timer">Timer</span></h2><div id="timerDisplay" class="big">05:00</div><div class="row"><input id="minutes" type="number" min="0" value="5" data-i18n-placeholder="min" placeholder="Min"><input id="seconds" type="number" min="0" max="59" value="0" data-i18n-placeholder="sec" placeholder="Sec"></div><button class="action" id="timerBtn" data-i18n="start" onclick="toggleTimer()">Start</button><button class="action secondary" data-i18n="pause" onclick="pauseTimer()">Pause</button><button class="action danger" data-i18n="reset" onclick="resetTimer()">Reset</button></div></section>
 
 <section id="stopwatch" class="screen">
-<button class="back" onclick="home()">← All tools</button><div class="card"><h2>⏱ Stopwatch</h2><div id="swDisplay" class="big">00:00.00</div>
-<button class="action" onclick="startSW()">Start</button><button class="action secondary" onclick="stopSW()">Стоп</button><button class="action secondary" onclick="resetSW()">Reset</button></div></section>
+<button class="back" data-i18n="back" onclick="home()">← All tools</button><div class="card"><h2>⏱ <span data-i18n="stopwatch">Stopwatch</span></h2><div id="swDisplay" class="big">00:00.00</div>
+<button class="action" data-i18n="start" onclick="startSW()">Start</button><button class="action secondary" data-i18n="stop" onclick="stopSW()">Stop</button><button class="action secondary" data-i18n="reset" onclick="resetSW()">Reset</button></div></section>
 
 <section id="date" class="screen">
-<button class="back" onclick="home()">← All tools</button><div class="card"><h2>📅 Date difference</h2>
-<label>Date 1</label><input id="date1" type="date"><label>Date 2</label><input id="date2" type="date">
-<button class="action" onclick="dateDiff()">Calculate</button><div id="dateResult" class="result"></div></div></section>
+<button class="back" data-i18n="back" onclick="home()">← All tools</button><div class="card"><h2>📅 <span data-i18n="dates">Date difference</span></h2>
+<label data-i18n="date1">Date 1</label><input id="date1" type="date"><label data-i18n="date2">Date 2</label><input id="date2" type="date">
+<button class="action" data-i18n="calculate" onclick="dateDiff()">Calculate</button><div id="dateResult" class="result"></div></div></section>
 
 <section id="random" class="screen">
-<button class="back" onclick="home()">← All tools</button><div class="card"><h2>🎲 Random число</h2>
-<div class="row"><input id="rmin" type="number" value="1"><input id="rmax" type="number" value="100"></div>
-<button class="action" onclick="randomNumber()">Generate</button><div id="randomResult" class="result big">—</div></div></section>
+<button class="back" data-i18n="back" onclick="home()">← All tools</button><div class="card"><h2>🎲 <span data-i18n="randomNumber">Random number</span></h2>
+<div class="row"><input id="rmin" type="number" value="1" data-i18n-placeholder="min"><input id="rmax" type="number" value="100" data-i18n-placeholder="max"></div>
+<button class="action" data-i18n="generate" onclick="randomNumber()">Generate</button><div id="randomResult" class="result big">—</div></div></section>
 
 <section id="text" class="screen">
-<button class="back" onclick="home()">← All tools</button><div class="card"><h2>🔤 Text Analyzer</h2><textarea id="textInput" oninput="analyzeText()" placeholder="Paste text..."></textarea>
-<div id="textResult" class="result">Characters: 0<br>Words: 0<br>Lines: 0</div>
-<div class="row"><button class="action secondary" onclick="upperText()">UPPERCASE</button><button class="action secondary" onclick="lowerText()">lowercase</button></div>
-<button class="action secondary" onclick="copyText('textInput')">Copy</button><button class="action danger" onclick="clearText()">Clear text</button></div></section>
+<button class="back" data-i18n="back" onclick="home()">← All tools</button><div class="card"><h2>🔤 <span data-i18n="textAnalyzer">Text Analyzer</span></h2><textarea id="textInput" oninput="analyzeText()" data-i18n-placeholder="paste" placeholder="Paste text..."></textarea>
+<div id="textResult" class="result"></div>
+<div class="row"><button class="action secondary" data-i18n="uppercase" onclick="upperText()">UPPERCASE</button><button class="action secondary" data-i18n="lowercase" onclick="lowerText()">lowercase</button></div>
+<button class="action secondary" data-i18n="copy" onclick="copyText('textInput')">Copy</button><button class="action danger" data-i18n="clearText" onclick="clearText()">Clear text</button></div></section>
 
 <section id="qr" class="screen">
-<button class="back" onclick="home()">← All tools</button><div class="card"><h2>🔲 QR Code</h2>
-<label>Text или ссылка</label><input id="qrInput" placeholder="https://example.com">
-<button class="action" onclick="makeQR()">Create QR</button><button class="action secondary" onclick="downloadQR()">⬇️ Скачать QR Code</button>
+<button class="back" data-i18n="back" onclick="home()">← All tools</button><div class="card"><h2>🔲 <span data-i18n="qr">QR</span> Code</h2>
+<label data-i18n="textOrLink">Text or link</label><input id="qrInput" placeholder="https://example.com">
+<button class="action" data-i18n="createQR" onclick="makeQR()">Create QR</button><button class="action secondary" data-i18n="downloadQR" onclick="downloadQR()">⬇️ Download QR Code</button>
 <canvas id="qrCanvas" width="240" height="240" style="display:block;margin:15px auto;max-width:100%;background:white"></canvas>
-<small>Simple QR generator without an external server.</small></div></section>
+<small data-i18n="simpleQR">Simple QR generator without an external server.</small></div></section>
 </main>
 <div id="toast" class="toast"></div>
 
@@ -110,7 +110,7 @@ const $=id=>document.getElementById(id);
 function openTool(id){document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));$(id).classList.add('active');const ls=$('languageSwitcher');if(ls)ls.style.display=id==='home'?'block':'none';scrollTo(0,0)}
 function home(){openTool('home')}
 function toast(t){$('toast').textContent=t;$('toast').style.display='block';setTimeout(()=>$('toast').style.display='none',1600)}
-async function copyText(id){let el=$(id),v=el.value??el.textContent;if(!v){toast('Nothing to copy');return}try{if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText(v);toast('Copied');return}}catch(e){}let ta=document.createElement('textarea');ta.value=v;ta.style.position='fixed';ta.style.left='-9999px';document.body.appendChild(ta);ta.focus();ta.select();let ok=false;try{ok=document.execCommand('copy')}catch(e){}document.body.removeChild(ta);toast(ok?'Copied':'Copy failed')}
+async function copyText(id){let el=$(id),v=el.value??el.textContent;if(!v){toast(t('nothing'));return}try{if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText(v);toast(t('copied'));return}}catch(e){}let ta=document.createElement('textarea');ta.value=v;ta.style.position='fixed';ta.style.left='-9999px';document.body.appendChild(ta);ta.focus();ta.select();let ok=false;try{ok=document.execCommand('copy')}catch(e){}document.body.removeChild(ta);toast(ok?t('copied'):t('copyFailed'))}
 
 function generatePassword(){
 let chars='',p='',sets=[];
@@ -119,7 +119,7 @@ if($('upper').checked)sets.push('ABCDEFGHIJKLMNOPQRSTUVWXYZ');
 if($('nums').checked)sets.push('0123456789');
 if($('symbols').checked)sets.push('!@#$%^&*_-+=?');
 sets.forEach(s=>{chars+=s;p+=s[Math.floor(Math.random()*s.length)]});
-if(!chars){$('passResult').textContent='Toыбери хотя бы один набор';return}
+if(!chars){$('passResult').textContent=t('chooseSet');return}
 while(p.length<+$('plen').value)p+=chars[Math.floor(Math.random()*chars.length)];
 p=p.split('').sort(()=>Math.random()-.5).join('');
 $('passResult').textContent=p.slice(0,+$('plen').value)
@@ -148,14 +148,14 @@ let expr=$('calc').value;
 if(!expr){$('calcResult').textContent='0';return}
 try{
 let value=evaluateCalcExpression(expr);
-$('calcResult').textContent=expr+' = '+(Number.isFinite(value)?Number(value.toFixed(12)):'Ошибка');
+$('calcResult').textContent=expr+' = '+(Number.isFinite(value)?Number(value.toFixed(12)) :t('error'));
 }catch{$('calcResult').textContent=expr+' = …'}
 }
 function calculate(){
 try{
 let value=evaluateCalcExpression($('calc').value);
 $('calcResult').textContent=$('calc').value+' = '+(Number.isFinite(value)?Number(value.toFixed(12)):'Ошибка');
-}catch{$('calcResult').textContent='Expression error'}
+}catch{$('calcResult').textContent=t('expressionError')}
 }
 const units={length:{m:1,km:1000,cm:.01,mm:.001,ft:.3048,yd:.9144},weight:{kg:1,g:.001,lb:.453592,oz:.0283495},temp:{C:'C',F:'F',K:'K'}};
 function loadUnits(){let type=$('convType').value,a=Object.keys(units[type]);$('from').innerHTML=a.map(x=>`<option>${x}</option>`).join('');$('to').innerHTML=a.map(x=>`<option>${x}</option>`).join('');$('to').selectedIndex=1;convert()}
@@ -163,24 +163,23 @@ $('convType').onchange=loadUnits;
 function convert(){let type=$('convType').value,v=parseFloat($('convValue').value)||0,f=$('from').value,t=$('to').value,r;
 if(type==='temp'){let c=f==='C'?v:f==='F'?(v-32)*5/9:v-273.15;r=t==='C'?c:t==='F'?c*9/5+32:c+273.15}else r=v*units[type][f]/units[type][t];
 $('convResult').textContent=`${v} ${f} = ${Number(r.toFixed(8))} ${t}`}
-function saveNote(){localStorage.setItem('pocketNote',$('note').value);$('saved').textContent='Сохранено локально';toast('Note saved')}
-function clearNote(){if(confirm('Clear заметку?')){$('note').value='';localStorage.removeItem('pocketNote')}}
+function saveNote(){localStorage.setItem('pocketNote',$('note').value);$('saved').textContent=t('saved');toast(t('noteSaved'))}
+function clearNote(){if(confirm(t('clearNoteQ'))){$('note').value='';localStorage.removeItem('pocketNote')}}
 $('note').value=localStorage.getItem('pocketNote')||'';
 
-let timer=null,timerEnd=0,timerRemaining=300000,timerRunning=false;function renderTimer(){let ms=timerRunning?Math.max(0,timerEnd-Date.now()):Math.max(0,timerRemaining),sec=Math.ceil(ms/1000),m=Math.floor(sec/60),r=sec%60;$('timerDisplay').textContent=String(m).padStart(2,'0')+':'+String(r).padStart(2,'0');if(ms<=0&&timerRunning){timerRunning=false;clearInterval(timer);timer=null;$('timerBtn').textContent='Start';toast('Toремя вышло');navigator.vibrate?.([200,100,200])}}function toggleTimer(){if(timerRunning){pauseTimer();return}if(timerRemaining<=0)timerRemaining=((+$('minutes').value||0)*60+(+$('seconds').value||0))*1000;if(timerRemaining<=0)return;timerEnd=Date.now()+timerRemaining;timerRunning=true;$('timerBtn').textContent='Pause';clearInterval(timer);timer=setInterval(renderTimer,100);renderTimer()}function pauseTimer(){if(!timerRunning)return;timerRemaining=Math.max(0,timerEnd-Date.now());timerRunning=false;clearInterval(timer);timer=null;$('timerBtn').textContent='Start';renderTimer()}function resetTimer(){clearInterval(timer);timer=null;timerRunning=false;timerRemaining=((+$('minutes').value||0)*60+(+$('seconds').value||0))*1000;$('timerBtn').textContent='Start';renderTimer()}
+let timer=null,timerEnd=0,timerRemaining=300000,timerRunning=false;function renderTimer(){let ms=timerRunning?Math.max(0,timerEnd-Date.now()):Math.max(0,timerRemaining),sec=Math.ceil(ms/1000),m=Math.floor(sec/60),r=sec%60;$('timerDisplay').textContent=String(m).padStart(2,'0')+':'+String(r).padStart(2,'0');if(ms<=0&&timerRunning){timerRunning=false;clearInterval(timer);timer=null;$('timerBtn').textContent=t('start');toast(t('timeUp'));navigator.vibrate?.([200,100,200])}}function toggleTimer(){if(timerRunning){pauseTimer();return}if(timerRemaining<=0)timerRemaining=((+$('minutes').value||0)*60+(+$('seconds').value||0))*1000;if(timerRemaining<=0)return;timerEnd=Date.now()+timerRemaining;timerRunning=true;$('timerBtn').textContent=t('pause');clearInterval(timer);timer=setInterval(renderTimer,100);renderTimer()}function pauseTimer(){if(!timerRunning)return;timerRemaining=Math.max(0,timerEnd-Date.now());timerRunning=false;clearInterval(timer);timer=null;$('timerBtn').textContent='Start';renderTimer()}function resetTimer(){clearInterval(timer);timer=null;timerRunning=false;timerRemaining=((+$('minutes').value||0)*60+(+$('seconds').value||0))*1000;$('timerBtn').textContent='Start';renderTimer()}
 let swStart=0,swElapsed=0,swInt=null;
 function renderSW(){let x=swElapsed+(swStart?Date.now()-swStart:0),cs=Math.floor(x/10)%100,s=Math.floor(x/1000)%60,m=Math.floor(x/60000);$('swDisplay').textContent=String(m).padStart(2,'0')+':'+String(s).padStart(2,'0')+'.'+String(cs).padStart(2,'0')}
 function startSW(){if(!swStart){swStart=Date.now();swInt=setInterval(renderSW,30)}}function stopSW(){if(swStart){swElapsed+=Date.now()-swStart;swStart=0;clearInterval(swInt);renderSW()}}function resetSW(){swStart=0;swElapsed=0;clearInterval(swInt);renderSW()}
 
-function dateDiff(){let a=new Date($('date1').value),b=new Date($('date2').value);if(isNaN(a)||isNaN(b))return;$('dateResult').textContent=Math.abs(Math.round((b-a)/86400000))+' дней'}
+function dateDiff(){let a=new Date($('date1').value),b=new Date($('date2').value);if(isNaN(a)||isNaN(b))return;$('dateResult').textContent=Math.abs(Math.round((b-a)/86400000))+' '+t('days')}
 function randomNumber(){let a=Math.ceil(+$('rmin').value),b=Math.floor(+$('rmax').value);if(a>b)[a,b]=[b,a];$('randomResult').textContent=Math.floor(Math.random()*(b-a+1))+a}
-function analyzeText(){let t=$('textInput').value;let lines=t?t.split(/\r?\n/).length:0;$('textResult').innerHTML=`Символов: ${t.length}<br>Слов: ${(t.trim().match(/\S+/g)||[]).length}<br>Строк: ${lines}`}
-function upperText(){$('textInput').value=$('textInput').value.toUpperCase();analyzeText()}function lowerText(){$('textInput').value=$('textInput').value.toLowerCase();analyzeText()}function clearText(){$('textInput').value='';analyzeText();toast('Text очищен')}
+function analyzeText(){let v=$('textInput').value;let lines=v?v.split(/\r?\n/).length:0;$('textResult').innerHTML=t('characters')+': '+v.length+'<br>'+t('words')+': '+(v.trim().match(/\S+/g)||[]).length+'<br>'+t('lines')+': '+lines}\nfunction upperText(){$('textInput').value=$('textInput').value.toUpperCase();analyzeText()}function lowerText(){$('textInput').value=$('textInput').value.toLowerCase();analyzeText()}function clearText(){$('textInput').value='';analyzeText();toast(t('textCleared'))}
 
 /* Local visual code. This is not a standards-compliant QR encoder yet. */
-function downloadQR(){let a=document.createElement('a');a.download='qr-code.png';a.href=$('qrCanvas').toDataURL('image/png');document.body.appendChild(a);a.click();a.remove();toast('QR saved as PNG')}
+function downloadQR(){let a=document.createElement('a');a.download='qr-code.png';a.href=$('qrCanvas').toDataURL('image/png');document.body.appendChild(a);a.click();a.remove();toast(t('qrSaved'))}
 function makeQR(){
-let text=$('qrInput').value;if(!text){toast('Toведи текст');return}
+let text=$('qrInput').value;if(!text){toast(t('enterText'));return}
 let c=$('qrCanvas'),x=c.getContext('2d'),n=29;x.fillStyle='#fff';x.fillRect(0,0,240,240);
 let seed=0;for(let i=0;i<text.length;i++)seed=(seed*31+text.charCodeAt(i))>>>0;
 function rand(){seed=(1664525*seed+1013904223)>>>0;return seed/4294967296}
@@ -188,49 +187,23 @@ let s=240/n;
 x.fillStyle='#000';
 for(let y=0;y<n;y++)for(let q=0;q<n;q++)if(rand()>.53)x.fillRect(q*s,y*s,s+.3,s+.3);
 function finder(px,py){x.fillStyle='#fff';x.fillRect(px*s,py*s,7*s,7*s);x.fillStyle='#000';x.fillRect(px*s,py*s,7*s,7*s);x.fillStyle='#fff';x.fillRect((px+1)*s,(py+1)*s,5*s,5*s);x.fillStyle='#000';x.fillRect((px+2)*s,(py+2)*s,3*s,3*s)}
-finder(0,0);finder(n-7,0);finder(0,n-7);toast('Code created')}
+finder(0,0);finder(n-7,0);finder(0,n-7);toast(t('codeCreated'))}
 loadUnits();generatePassword();renderTimer();$('date1').valueAsDate=new Date();$('date2').valueAsDate=new Date();
 
 const I18N={
-en:{
-subtitle:"Useful tools in one place",allTools:"All tools",password:"Password",passwordDesc:"Generator",calculator:"Calculator",calculatorDesc:"Quick calculations",converter:"Converter",converterDesc:"Length, weight, temperature",notes:"Notes",notesDesc:"Auto-save",timer:"Timer",timerDesc:"Countdown",stopwatch:"Stopwatch",stopwatchDesc:"Precise time",dates:"Dates",datesDesc:"Date difference",random:"Random",randomDesc:"Numbers and choices",text:"Text",textDesc:"Counter and case",qr:"QR",qrDesc:"Generation",
-localInfo:"All main functions work locally. QR generation uses the built-in Canvas and does not send text to a server.",back:"← All tools",generate:"Generate",copy:"Copy",clear:"Clear",save:"Save",pause:"Pause",reset:"Reset",start:"Start",calculate:"Calculate",nothing:"Nothing to copy",copied:"Copied",copyFailed:"Copy failed",saved:"Saved locally",noteSaved:"Note saved",textCleared:"Text cleared",codeCreated:"Code created",qrSaved:"QR saved as PNG",enterText:"Enter text",expressionError:"Expression error",timeUp:"Time is up",downloadQR:"⬇️ Download QR Code",createQR:"Create QR",textOrLink:"Text or link",simpleQR:"Simple QR generator without an external server.",from:"From",to:"To",value:"Value",min:"Min",sec:"Sec",write:"Write something...",paste:"Paste text...",uppercase:"UPPERCASE",lowercase:"lowercase",characters:"Characters",words:"Words",lines:"Lines",length:"Length:",lower:"Lowercase letters",upper:"Uppercase letters",numbers:"Numbers",symbols:"Symbols",enterExpression:"Enter an expression using the buttons below",date1:"Date 1",date2:"Date 2",randomNumber:"Random number",textAnalyzer:"Text Analyzer",clearText:"Clear text",generatorPassword:"Password Generator",weight:"Weight",temperature:"Temperature",days:"days"
-},
-ru:{
-subtitle:"Полезные инструменты в одном месте",allTools:"Все инструменты",password:"Пароль",passwordDesc:"Генератор",calculator:"Калькулятор",calculatorDesc:"Быстрые расчёты",converter:"Конвертер",converterDesc:"Длина, вес, температура",notes:"Заметки",notesDesc:"Автосохранение",timer:"Таймер",timerDesc:"Обратный отсчёт",stopwatch:"Секундомер",stopwatchDesc:"Точное время",dates:"Даты",datesDesc:"Разница между датами",random:"Случайное",randomDesc:"Числа и выбор",text:"Текст",textDesc:"Счётчик и регистр",qr:"QR",qrDesc:"Генерация",
-localInfo:"Все основные функции работают локально. QR-генерация использует встроенный Canvas и не отправляет текст на сервер.",back:"← Все инструменты",generate:"Сгенерировать",copy:"Копировать",clear:"Очистить",save:"Сохранить",pause:"Пауза",reset:"Сброс",start:"Старт",calculate:"Рассчитать",nothing:"Нечего копировать",copied:"Скопировано",copyFailed:"Не удалось скопировать",saved:"Сохранено локально",noteSaved:"Заметка сохранена",textCleared:"Текст очищен",codeCreated:"Код создан",qrSaved:"QR сохранён как PNG",enterText:"Введи текст",expressionError:"Ошибка выражения",timeUp:"Время вышло",downloadQR:"⬇️ Скачать QR-код",createQR:"Создать QR",textOrLink:"Текст или ссылка",simpleQR:"Простой QR-генератор без внешнего сервера.",from:"Из",to:"В",value:"Значение",min:"Мин",sec:"Сек",write:"Запиши что-нибудь...",paste:"Вставь текст...",uppercase:"В ВЕРХНИЙ",lowercase:"в нижний",characters:"Символов",words:"Слов",lines:"Строк",length:"Длина:",lower:"Строчные буквы",upper:"Заглавные буквы",numbers:"Цифры",symbols:"Символы",enterExpression:"Введи выражение кнопками ниже",date1:"Дата 1",date2:"Дата 2",randomNumber:"Случайное число",textAnalyzer:"Анализ текста",clearText:"Очистить текст",generatorPassword:"Генератор паролей",weight:"Вес",temperature:"Температура",days:"дней"
-}};
-function setLanguage(lang){
-  if(!I18N[lang]) lang='en';
-  localStorage.setItem('pocketLang',lang);
-  applyLanguage(lang);
+en:{subtitle:"Useful tools in one place",back:"← All tools",password:"Password",passwordDesc:"Generator",calculator:"Calculator",calculatorDesc:"Quick calculations",converter:"Converter",converterDesc:"Length, weight, temperature",notes:"Notes",notesDesc:"Auto-save",timer:"Timer",timerDesc:"Countdown",stopwatch:"Stopwatch",stopwatchDesc:"Precise time",dates:"Dates",datesDesc:"Date difference",random:"Random",randomDesc:"Numbers and choices",text:"Text",textDesc:"Counter and case",qr:"QR",qrDesc:"Generation",localInfo:"All main functions work locally. QR generation uses the built-in Canvas and does not send text to a server.",generatorPassword:"Password Generator",length:"Length:",lower:"Lowercase letters",upper:"Uppercase letters",numbers:"Numbers",symbols:"Symbols",generate:"Generate",copy:"Copy",enterExpression:"Enter an expression using the buttons below",lengthUnit:"Length",weight:"Weight",temperature:"Temperature",from:"From",to:"To",value:"Value",write:"Write something...",save:"Save",clear:"Clear",min:"Min",sec:"Sec",start:"Start",pause:"Pause",reset:"Reset",stop:"Stop",calculate:"Calculate",max:"Max",randomNumber:"Random number",paste:"Paste text...",characters:"Characters",words:"Words",lines:"Lines",uppercase:"UPPERCASE",lowercase:"lowercase",clearText:"Clear text",textAnalyzer:"Text Analyzer",textOrLink:"Text or link",createQR:"Create QR",downloadQR:"⬇️ Download QR Code",simpleQR:"Simple QR generator without an external server.",nothing:"Nothing to copy",copied:"Copied",copyFailed:"Copy failed",chooseSet:"Choose at least one character set",error:"Error",expressionError:"Expression error",saved:"Saved locally",noteSaved:"Note saved",clearNoteQ:"Clear note?",timeUp:"Time is up",textCleared:"Text cleared",codeCreated:"Code created",qrSaved:"QR saved as PNG",enterText:"Enter text",days:"days"},
+ru:{subtitle:"Полезные инструменты в одном месте",back:"← Все инструменты",password:"Пароль",passwordDesc:"Генератор",calculator:"Калькулятор",calculatorDesc:"Быстрые расчёты",converter:"Конвертер",converterDesc:"Длина, вес, температура",notes:"Заметки",notesDesc:"Автосохранение",timer:"Таймер",timerDesc:"Обратный отсчёт",stopwatch:"Секундомер",stopwatchDesc:"Точное время",dates:"Даты",datesDesc:"Разница между датами",random:"Случайное",randomDesc:"Числа и выбор",text:"Текст",textDesc:"Счётчик и регистр",qr:"QR",qrDesc:"Генерация",localInfo:"Все основные функции работают локально. QR-генерация использует встроенный Canvas и не отправляет текст на сервер.",generatorPassword:"Генератор паролей",length:"Длина:",lower:"Строчные буквы",upper:"Заглавные буквы",numbers:"Цифры",symbols:"Символы",generate:"Сгенерировать",copy:"Копировать",enterExpression:"Введи выражение кнопками ниже",lengthUnit:"Длина",weight:"Вес",temperature:"Температура",from:"Из",to:"В",value:"Значение",write:"Запиши что-нибудь...",save:"Сохранить",clear:"Очистить",min:"Мин",sec:"Сек",start:"Старт",pause:"Пауза",reset:"Сброс",stop:"Стоп",calculate:"Рассчитать",max:"Макс",randomNumber:"Случайное число",paste:"Вставь текст...",characters:"Символов",words:"Слов",lines:"Строк",uppercase:"В ВЕРХНИЙ",lowercase:"в нижний",clearText:"Очистить текст",textAnalyzer:"Анализ текста",textOrLink:"Текст или ссылка",createQR:"Создать QR",downloadQR:"⬇️ Скачать QR-код",simpleQR:"Простой QR-генератор без внешнего сервера.",nothing:"Нечего копировать",copied:"Скопировано",copyFailed:"Не удалось скопировать",chooseSet:"Выбери хотя бы один набор символов",error:"Ошибка",expressionError:"Ошибка выражения",saved:"Сохранено локально",noteSaved:"Заметка сохранена",clearNoteQ:"Очистить заметку?",timeUp:"Время вышло",textCleared:"Текст очищен",codeCreated:"Код создан",qrSaved:"QR сохранён как PNG",enterText:"Введи текст",days:"дней"}
+};
+let currentLang=localStorage.getItem('pocketLang')==='ru'?'ru':'en';
+function t(key){return (I18N[currentLang]&&I18N[currentLang][key])||I18N.en[key]||key}
+function setLanguage(lang){if(lang!=='ru'&&lang!=='en')return;currentLang=lang;localStorage.setItem('pocketLang',lang);applyLanguage()}
+function applyLanguage(){
+document.documentElement.lang=currentLang;
+document.querySelectorAll('[data-i18n]').forEach(el=>{const key=el.dataset.i18n;if(I18N[currentLang][key]!=null)el.textContent=I18N[currentLang][key]});
+document.querySelectorAll('[data-i18n-placeholder]').forEach(el=>{const key=el.dataset.i18nPlaceholder;if(I18N[currentLang][key]!=null)el.placeholder=I18N[currentLang][key]});
+analyzeText();
+const convType=$('convType');if(convType){convType.options[0].textContent=t('lengthUnit');convType.options[1].textContent=t('weight');convType.options[2].textContent=t('temperature')}
+if($('timerBtn'))$('timerBtn').textContent=timerRunning?t('pause'):t('start');
 }
-function applyLanguage(lang){
-  const t=I18N[lang];
-  document.documentElement.lang=lang;
-  const set=(id,key)=>{const el=$(id);if(el)el.textContent=t[key]};
-  const setText=(id,key)=>{const el=$(id);if(el)el.textContent=t[key]};
-  set('subtitle','subtitle');
-  document.querySelectorAll('.back').forEach(el=>el.textContent=t.back);
-  const homeTools=[
-    ['password','password','passwordDesc'],['calculator','calculator','calculatorDesc'],['convert','converter','converterDesc'],['notes','notes','notesDesc'],['timer','timer','timerDesc'],['stopwatch','stopwatch','stopwatchDesc'],['date','dates','datesDesc'],['random','random','randomDesc'],['text','text','textDesc'],['qr','qr','qrDesc']
-  ];
-  document.querySelectorAll('#home .tool').forEach((el,i)=>{if(homeTools[i]){const b=el.querySelector('b'),s=el.querySelector('span');b.textContent=t[homeTools[i][1]];s.textContent=t[homeTools[i][2]]}});
-  const info=document.querySelector('#home .card small');if(info)info.textContent=t.localInfo;
-  const h=(id,key)=>{const el=document.querySelector('#'+id+' h2');if(el)el.textContent=t[key]};
-  h('password','generatorPassword');h('calculator','calculator');h('convert','converter');h('notes','notes');h('timer','timer');h('stopwatch','stopwatch');h('date','dates');h('random','randomNumber');h('text','textAnalyzer');h('qr','qr');
-  const p=document.querySelector('#password');
-  if(p){const labels=p.querySelectorAll('label');if(labels[0])labels[0].childNodes[0].nodeValue=t.length+' ';if(labels[1])labels[1].lastChild.textContent=' '+t.lower;if(labels[2])labels[2].lastChild.textContent=' '+t.upper;if(labels[3])labels[3].lastChild.textContent=' '+t.numbers;if(labels[4])labels[4].lastChild.textContent=' '+t.symbols;p.querySelector('.action:not(.secondary)')?.replaceChildren(document.createTextNode(t.generate));p.querySelector('.secondary')?.replaceChildren(document.createTextNode(t.copy));}
-  const calc=$('calc');if(calc)calc.placeholder=t.enterExpression;
-  const convType=$('convType');if(convType){const opts=convType.options;opts[0].textContent=I18N[lang].length;opts[1].textContent=I18N[lang].weight;opts[2].textContent=I18N[lang].temperature;}
-  const convLabels=document.querySelectorAll('#convert label');if(convLabels[0])convLabels[0].textContent=t.from;if(convLabels[1])convLabels[1].textContent=t.to;if(convLabels[2])convLabels[2].textContent=t.value;
-  const note=$('note');if(note)note.placeholder=t.write;const noteButtons=document.querySelectorAll('#notes button');if(noteButtons[0])noteButtons[0].textContent=t.save;if(noteButtons[1])noteButtons[1].textContent=t.copy;if(noteButtons[2])noteButtons[2].textContent=t.clear;
-  const timerButtons=document.querySelectorAll('#timer button');if(timerButtons[0])timerButtons[0].textContent=timerRunning?t.pause:t.start;if(timerButtons[1])timerButtons[1].textContent=t.pause;if(timerButtons[2])timerButtons[2].textContent=t.reset;
-  const swButtons=document.querySelectorAll('#stopwatch button');if(swButtons[0])swButtons[0].textContent=t.start;if(swButtons[1])swButtons[1].textContent=t.pause;if(swButtons[2])swButtons[2].textContent=t.reset;
-  const dateLabels=document.querySelectorAll('#date label');if(dateLabels[0])dateLabels[0].textContent=t.date1;if(dateLabels[1])dateLabels[1].textContent=t.date2;const dateBtn=document.querySelector('#date .action');if(dateBtn)dateBtn.textContent=t.calculate;
-  const randomInputs=document.querySelectorAll('#random input');if(randomInputs[0])randomInputs[0].placeholder=t.min;if(randomInputs[1])randomInputs[1].placeholder='Max';const randomBtn=document.querySelector('#random .action');if(randomBtn)randomBtn.textContent=t.generate;
-  const textInput=$('textInput');if(textInput)textInput.placeholder=t.paste;const tr=$('textResult');if(tr){analyzeText();}const tb=document.querySelectorAll('#text .action');if(tb[0])tb[0].textContent=t.uppercase;if(tb[1])tb[1].textContent=t.lower;if(tb[2])tb[2].textContent=t.copy;if(tb[3])tb[3].textContent=t.clearText;
-  const qrInput=$('qrInput');if(qrInput)qrInput.placeholder='https://example.com';const qrLabels=document.querySelectorAll('#qr label');if(qrLabels[0])qrLabels[0].textContent=t.textOrLink;const qrButtons=document.querySelectorAll('#qr .action');if(qrButtons[0])qrButtons[0].textContent=t.createQR;if(qrButtons[1])qrButtons[1].textContent=t.downloadQR;const qsmall=document.querySelector('#qr small');if(qsmall)qsmall.textContent=t.simpleQR;
-}
-(function(){applyLanguage(localStorage.getItem('pocketLang')||'en')})();</script>
+applyLanguage();</script>
 </body></html>
