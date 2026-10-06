@@ -1,6 +1,6 @@
 const config = {
   appId: 'com.alexbruno.pocketutility',
-  appName: 'Pocket Utility',
+  appName: 'Useful',
   webDir: 'www',
   bundledWebRuntime: false
 };
