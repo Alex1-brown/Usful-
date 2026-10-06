@@ -58,7 +58,9 @@ small{color:var(--muted)}.toast{position:fixed;bottom:22px;left:50%;transform:tr
 
 <section id="calculator" class="screen">
 <button class="back" onclick="home()">← Все инструменты</button><div class="card"><h2>🧮 Калькулятор</h2>
-<input id="calc" inputmode="text" autocomplete="off" placeholder="Например: 25+15*2"><div class="calcpad"><button onclick="calcKey('7')">7</button><button onclick="calcKey('8')">8</button><button onclick="calcKey('9')">9</button><button onclick="calcKey('/')">÷</button><button onclick="calcKey('4')">4</button><button onclick="calcKey('5')">5</button><button onclick="calcKey('6')">6</button><button onclick="calcKey('*')">×</button><button onclick="calcKey('1')">1</button><button onclick="calcKey('2')">2</button><button onclick="calcKey('3')">3</button><button onclick="calcKey('-')">−</button><button onclick="calcKey('0')">0</button><button onclick="calcKey('.')">.</button><button onclick="calcKey('%')">%</button><button onclick="calcKey('+')">+</button><button onclick="calcKey('(')">(</button><button onclick="calcKey(')')">)</button><button onclick="$('calc').value=''">C</button><button onclick="calculate()">=</button></div><div id="calcResult" class="result"></div><div id="calcResult" class="result"></div></div></section>
+<div id="calcResult" class="result" style="margin-top:0;margin-bottom:10px;min-height:48px">0</div>
+<input id="calc" type="text" inputmode="none" readonly autocomplete="off" placeholder="Введи выражение кнопками ниже">
+<div class="calcpad"><button onclick="calcKey('7')">7</button><button onclick="calcKey('8')">8</button><button onclick="calcKey('9')">9</button><button onclick="calcKey('/')">÷</button><button onclick="calcKey('4')">4</button><button onclick="calcKey('5')">5</button><button onclick="calcKey('6')">6</button><button onclick="calcKey('*')">×</button><button onclick="calcKey('1')">1</button><button onclick="calcKey('2')">2</button><button onclick="calcKey('3')">3</button><button onclick="calcKey('-')">−</button><button onclick="calcKey('0')">0</button><button onclick="calcKey('.')">.</button><button onclick="calcKey('%')">%</button><button onclick="calcKey('+')">+</button><button onclick="calcKey('(')">(</button><button onclick="calcKey(')')">)</button><button onclick="clearCalc()">C</button><button onclick="calculate()">=</button></div></div></section>
 
 <section id="convert" class="screen">
 <button class="back" onclick="home()">← Все инструменты</button><div class="card"><h2>📏 Конвертер</h2>
@@ -122,8 +124,31 @@ while(p.length<+$('plen').value)p+=chars[Math.floor(Math.random()*chars.length)]
 p=p.split('').sort(()=>Math.random()-.5).join('');
 $('passResult').textContent=p.slice(0,+$('plen').value)
 }
-function calcKey(k){let e=$('calc'),a=e.selectionStart??e.value.length,b=e.selectionEnd??e.value.length;e.value=e.value.slice(0,a)+k+e.value.slice(b);e.focus();e.setSelectionRange(a+1,a+1)}
-function calculate(){try{$('calcResult').textContent=Function('"use strict";return ('+$('calc').value.replace(/[^0-9+\-*/().% ]/g,'')+')')()}catch{$('calcResult').textContent='Ошибка выражения'}}
+function calcKey(k){
+let e=$('calc');
+e.value+=k;
+updateCalcResult();
+}
+function clearCalc(){$('calc').value='';$('calcResult').textContent='0'}
+function evaluateCalcExpression(expr){
+let clean=expr.replace(/[^0-9+\-*/().% ]/g,'').replace(/(\d+(?:\.\d+)?)%/g,'($1/100)');
+if(!clean.trim())return 0;
+return Function('"use strict";return ('+clean+')')();
+}
+function updateCalcResult(){
+let expr=$('calc').value;
+if(!expr){$('calcResult').textContent='0';return}
+try{
+let value=evaluateCalcExpression(expr);
+$('calcResult').textContent=expr+' = '+(Number.isFinite(value)?Number(value.toFixed(12)):'Ошибка');
+}catch{$('calcResult').textContent=expr+' = …'}
+}
+function calculate(){
+try{
+let value=evaluateCalcExpression($('calc').value);
+$('calcResult').textContent=$('calc').value+' = '+(Number.isFinite(value)?Number(value.toFixed(12)):'Ошибка');
+}catch{$('calcResult').textContent='Ошибка выражения'}
+}
 const units={length:{m:1,km:1000,cm:.01,mm:.001,ft:.3048,yd:.9144},weight:{kg:1,g:.001,lb:.453592,oz:.0283495},temp:{C:'C',F:'F',K:'K'}};
 function loadUnits(){let type=$('convType').value,a=Object.keys(units[type]);$('from').innerHTML=a.map(x=>`<option>${x}</option>`).join('');$('to').innerHTML=a.map(x=>`<option>${x}</option>`).join('');$('to').selectedIndex=1;convert()}
 $('convType').onchange=loadUnits;
@@ -141,7 +166,7 @@ function startSW(){if(!swStart){swStart=Date.now();swInt=setInterval(renderSW,30
 
 function dateDiff(){let a=new Date($('date1').value),b=new Date($('date2').value);if(isNaN(a)||isNaN(b))return;$('dateResult').textContent=Math.abs(Math.round((b-a)/86400000))+' дней'}
 function randomNumber(){let a=Math.ceil(+$('rmin').value),b=Math.floor(+$('rmax').value);if(a>b)[a,b]=[b,a];$('randomResult').textContent=Math.floor(Math.random()*(b-a+1))+a}
-function analyzeText(){let t=$('textInput').value;$('textResult').innerHTML=`Символов: ${t.length}<br>Слов: ${(t.trim().match(/\S+/g)||[]).length}<br>Строк: ${t?t.split('\\n').length:0}`}
+function analyzeText(){let t=$('textInput').value;let lines=t?t.split(/\r?\n/).length:0;$('textResult').innerHTML=`Символов: ${t.length}<br>Слов: ${(t.trim().match(/\S+/g)||[]).length}<br>Строк: ${lines}`}
 function upperText(){$('textInput').value=$('textInput').value.toUpperCase();analyzeText()}function lowerText(){$('textInput').value=$('textInput').value.toLowerCase();analyzeText()}
 
 /* Local visual code. This is not a standards-compliant QR encoder yet. */
