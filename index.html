@@ -58,9 +58,9 @@ small{color:var(--muted)}.toast{position:fixed;bottom:22px;left:50%;transform:tr
 
 <section id="calculator" class="screen">
 <button class="back" onclick="home()">← Все инструменты</button><div class="card"><h2>🧮 Калькулятор</h2>
-<div id="calcResult" class="result" style="margin-top:0;margin-bottom:10px;min-height:48px">0</div>
 <input id="calc" type="text" inputmode="none" readonly autocomplete="off" placeholder="Введи выражение кнопками ниже">
-<div class="calcpad"><button onclick="calcKey('7')">7</button><button onclick="calcKey('8')">8</button><button onclick="calcKey('9')">9</button><button onclick="calcKey('/')">÷</button><button onclick="calcKey('4')">4</button><button onclick="calcKey('5')">5</button><button onclick="calcKey('6')">6</button><button onclick="calcKey('*')">×</button><button onclick="calcKey('1')">1</button><button onclick="calcKey('2')">2</button><button onclick="calcKey('3')">3</button><button onclick="calcKey('-')">−</button><button onclick="calcKey('0')">0</button><button onclick="calcKey('.')">.</button><button onclick="calcKey('%')">%</button><button onclick="calcKey('+')">+</button><button onclick="calcKey('(')">(</button><button onclick="calcKey(')')">)</button><button onclick="clearCalc()">C</button><button onclick="calculate()">=</button></div></div></section>
+<div id="calcResult" class="result" style="margin-top:10px;margin-bottom:10px;min-height:48px">0</div>
+<div class="calcpad"><button onclick="calcKey('7')">7</button><button onclick="calcKey('8')">8</button><button onclick="calcKey('9')">9</button><button onclick="calcKey('/')">÷</button><button onclick="calcKey('4')">4</button><button onclick="calcKey('5')">5</button><button onclick="calcKey('6')">6</button><button onclick="calcKey('*')">×</button><button onclick="calcKey('1')">1</button><button onclick="calcKey('2')">2</button><button onclick="calcKey('3')">3</button><button onclick="calcKey('-')">−</button><button onclick="calcKey('0')">0</button><button onclick="calcKey('.')">.</button><button onclick="calcKey('%')">%</button><button onclick="calcKey('+')">+</button><button onclick="calcKey('(')">(</button><button onclick="calcKey(')')">)</button><button onclick="backspaceCalc()">⌫</button><button onclick="clearCalc()">C</button><button onclick="calculate()">=</button></div></div></section>
 
 <section id="convert" class="screen">
 <button class="back" onclick="home()">← Все инструменты</button><div class="card"><h2>📏 Конвертер</h2>
@@ -127,6 +127,11 @@ $('passResult').textContent=p.slice(0,+$('plen').value)
 function calcKey(k){
 let e=$('calc');
 e.value+=k;
+updateCalcResult();
+}
+function backspaceCalc(){
+let e=$('calc');
+e.value=e.value.slice(0,-1);
 updateCalcResult();
 }
 function clearCalc(){$('calc').value='';$('calcResult').textContent='0'}
