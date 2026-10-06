@@ -177,18 +177,26 @@ function randomNumber(){let a=Math.ceil(+$('rmin').value),b=Math.floor(+$('rmax'
 function analyzeText(){let v=$('textInput').value;let lines=v?v.split(/\r?\n/).length:0;$('textResult').innerHTML=t('characters')+': '+v.length+'<br>'+t('words')+': '+(v.trim().match(/\S+/g)||[]).length+'<br>'+t('lines')+': '+lines}
 function upperText(){$('textInput').value=$('textInput').value.toUpperCase();analyzeText()}function lowerText(){$('textInput').value=$('textInput').value.toLowerCase();analyzeText()}function clearText(){$('textInput').value='';analyzeText();toast(t('textCleared'))}
 
-/* Local visual code. This is not a standards-compliant QR encoder yet. */
+/* Standards-compliant QR encoder: byte-mode QR, versions 1-10, ECC M. */
+const QR_ECC_M={1:16,2:28,3:44,4:64,5:86,6:108,7:124,8:154,9:182,10:216};
+const QR_DATA_CODEWORDS={1:16,2:28,3:44,4:64,5:86,6:108,7:124,8:154,9:182,10:216};
+const QR_BLOCKS_M={1:[[1,16]],2:[[1,28]],3:[[1,44]],4:[[2,32]],5:[[2,43]],6:[[4,27]],7:[[4,31]],8:[[2,38],[2,39]],9:[[3,36],[2,37]],10:[[4,43],[1,44]]};
+function qrGFMultiply(x,y){let z=0;while(y){if(y&1)z^=x;y>>=1;x=(x<<1)^((x&0x80)?0x11d:0)}return z}
+function qrPolyMul(a,b){let r=new Array(a.length+b.length-1).fill(0);for(let i=0;i<a.length;i++)for(let j=0;j<b.length;j++)r[i+j]^=qrGFMultiply(a[i],b[j]);return r}
+function qrGenerator(ec){let g=[1];for(let i=0;i<ec;i++)g=qrPolyMul(g,[1,Math.pow(2,i)]);return g}
+function qrRS(data,ec){let g=qrGenerator(ec),r=new Array(ec).fill(0);for(const b of data){let f=b^r[0];r.shift();r.push(0);for(let i=0;i<ec;i++)r[i]^=qrGFMultiply(g[i+1],f)}return r}
+function qrBytes(text){return Array.from(new TextEncoder().encode(text))}
+function qrVersionFor(bytes){for(let v=1;v<=10;v++){let cap=QR_DATA_CODEWORDS[v];if(bytes.length<=cap-2)return v}throw new Error('QR text is too long')}
+function qrBitsPush(a,val,n){for(let i=n-1;i>=0;i--)a.push((val>>>i)&1)}
+function qrBuildCodewords(text){let bytes=qrBytes(text),v=qrVersionFor(bytes),dataCap=QR_DATA_CODEWORDS[v],bits=[];qrBitsPush(bits,4,4);qrBitsPush(bits,bytes.length,8);bytes.forEach(b=>qrBitsPush(bits,b,8));while(bits.length<dataCap*8&&bits.length%8)bits.push(0);while(bits.length<dataCap*8)qrBitsPush(bits,bits.length%16===0?0xec:0x11,8);let data=[];for(let i=0;i<bits.length;i+=8){let n=0;for(let j=0;j<8;j++)n=(n<<1)|bits[i+j];data.push(n)}let groups=QR_BLOCKS_M[v],blocks=[],idx=0;for(const [count,total] of groups){let ec=total-(dataCap/(groups.reduce((s,x)=>s+x[0],0)));for(let k=0;k<count;k++){let d=data.slice(idx,idx+(total-ec));idx+=total-ec;blocks.push({d,ec,r:qrRS(d,ec)})}}let out=[];for(let i=0;i<Math.max(...blocks.map(b=>b.d.length));i++)blocks.forEach(b=>{if(i<b.d.length)out.push(b.d[i])});for(let i=0;i<Math.max(...blocks.map(b=>b.r.length));i++)blocks.forEach(b=>{if(i<b.r.length)out.push(b.r[i])});return {v,bytes:out}}
+function qrBCH(v,p){let d=v<<p;while((d.toString(2).length-(v.toString(2).length))>=p)d^=0x11d<<(d.toString(2).length-v.toString(2).length);return (v<<p)|d}
+function qrFormatBits(mask){let x=qrBCH((0<<3)|mask,10)^0x5412;return x}
+function qrMatrix(v,codewords,mask){let n=17+4*v,m=Array.from({length:n},()=>Array(n).fill(null));function finder(r,c){for(let y=-1;y<=7;y++)for(let x=-1;x<=7;x++){let yy=r+y,xx=c+x;if(yy<0||xx<0||yy>=n||xx>=n)continue;m[yy][xx]=(x>=0&&x<=6&&y>=0&&y<=6&&(x===0||x===6||y===0||y===6|| (x>=2&&x<=4&&y>=2&&y<=4)))}}
+finder(0,0);finder(0,n-7);finder(n-7,0);for(let i=8;i<n-8;i++){if(m[6][i]===null)m[6][i]=i%2===0;if(m[i][6]===null)m[i][6]=i%2===0}m[n-8][8]=true;let bits=[];codewords.forEach(b=>qrBitsPush(bits,b,8));let k=0,up=true,col=n-1;while(col>0){if(col===6)col--;for(let i=0;i<n;i++){let r=up?n-1-i:i;for(let c=0;c<2;c++){let cc=col-c;if(m[r][cc]===null)m[r][cc]=k<bits.length?bits[k++]:false}}up=!up;col-=2}function applyMask(r,c){return [[(r+c)%2===0,r%2===0, c%3===0,(r+c)%3===0,(Math.floor(r/2)+Math.floor(c/3))%2===0,(r*c)%2+(r*c)%3===0,((r*c)%2+(r*c)%3)%2===0,((r*c)%3+(r+c)%2)%2===0][mask] }[0]}
+let fmt=qrFormatBits(mask);for(let i=0;i<15;i++){let bit=((fmt>>i)&1)!==0;let a,b;if(i<6){a=[i,8];b=[8,n-1-i]}else if(i<8){a=[i+1,8];b=[8,15-i]}else{a=[n-15+i,8];b=[8,15-i-1]}m[a[0]][a[1]]=bit;m[b[0]][b[1]]=bit}for(let r=0;r<n;r++)for(let c=0;c<n;c++)if((r<9&&c<9)||(r<9&&c>=n-8)||(r>=n-8&&c<9)){}else if(r===6||c===6){}else if(m[r][c]!==null)m[r][c]=!!m[r][c]^applyMask(r,c);return m}
+function qrPenalty(m){let n=m.length,s=0;for(let r=0;r<n;r++)for(let c=0;c<n;c++){let same=0,v=m[r][c];for(let d=1;d<=4;d++){if(c+d<n&&m[r][c+d]===v)same++;if(r+d<n&&m[r+d][c]===v)same++}if(same>=3)s+=same-2}return s}
+function makeQR(){let text=$('qrInput').value;if(!text){toast(t('enterText'));return}try{let q=qrBuildCodewords(text),best=null;for(let mask=0;mask<8;mask++){let m=qrMatrix(q.v,q.bytes,mask),p=qrPenalty(m);if(!best||p<best.p)best={m,p}}let m=best.m,n=m.length,c=$('qrCanvas'),x=c.getContext('2d'),quiet=4,total=n+quiet*2,s=Math.floor(Math.min(c.width,c.height)/total),off=Math.floor((c.width-n*s)/2);x.fillStyle='#fff';x.fillRect(0,0,c.width,c.height);x.fillStyle='#000';for(let r=0;r<n;r++)for(let col=0;col<n;col++)if(m[r][col])x.fillRect(off+col*s,off+r*s,s,s);toast(t('codeCreated'))}catch(e){toast(t('qrTooLong'))}}
 function downloadQR(){let a=document.createElement('a');a.download='qr-code.png';a.href=$('qrCanvas').toDataURL('image/png');document.body.appendChild(a);a.click();a.remove();toast(t('qrSaved'))}
-function makeQR(){
-let text=$('qrInput').value;if(!text){toast(t('enterText'));return}
-let c=$('qrCanvas'),x=c.getContext('2d'),n=29;x.fillStyle='#fff';x.fillRect(0,0,240,240);
-let seed=0;for(let i=0;i<text.length;i++)seed=(seed*31+text.charCodeAt(i))>>>0;
-function rand(){seed=(1664525*seed+1013904223)>>>0;return seed/4294967296}
-let s=240/n;
-x.fillStyle='#000';
-for(let y=0;y<n;y++)for(let q=0;q<n;q++)if(rand()>.53)x.fillRect(q*s,y*s,s+.3,s+.3);
-function finder(px,py){x.fillStyle='#fff';x.fillRect(px*s,py*s,7*s,7*s);x.fillStyle='#000';x.fillRect(px*s,py*s,7*s,7*s);x.fillStyle='#fff';x.fillRect((px+1)*s,(py+1)*s,5*s,5*s);x.fillStyle='#000';x.fillRect((px+2)*s,(py+2)*s,3*s,3*s)}
-finder(0,0);finder(n-7,0);finder(0,n-7);toast(t('codeCreated'))}
 loadUnits();generatePassword();renderTimer();$('date1').valueAsDate=new Date();$('date2').valueAsDate=new Date();
 
 const I18N={
