@@ -26,7 +26,7 @@ small{color:var(--muted)}.toast{position:fixed;bottom:22px;left:50%;transform:tr
 </head>
 <body>
 <header>
-<h1>⚡ Pocket Utility</h1><p id="subtitle">Useful tools in one place</p><div style="margin-top:10px"><button class="action secondary" style="width:auto;margin:0 6px 0 0;padding:8px 12px" onclick="setLanguage('en')">English</button><button class="action secondary" style="width:auto;margin:0;padding:8px 12px" onclick="setLanguage('ru')">Русский</button></div>
+<h1>⚡ Pocket Utility</h1><p id="subtitle">Useful tools in one place</p><div id="languageSwitcher" style="margin-top:10px"><button class="action secondary" style="width:auto;margin:0 6px 0 0;padding:8px 12px" onclick="setLanguage('en')">English</button><button class="action secondary" style="width:auto;margin:0;padding:8px 12px" onclick="setLanguage('ru')">Русский</button></div>
 </header>
 
 <main>
@@ -107,7 +107,7 @@ small{color:var(--muted)}.toast{position:fixed;bottom:22px;left:50%;transform:tr
 
 <script>
 const $=id=>document.getElementById(id);
-function openTool(id){document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));$(id).classList.add('active');scrollTo(0,0)}
+function openTool(id){document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));$(id).classList.add('active');const ls=$('languageSwitcher');if(ls)ls.style.display=id==='home'?'block':'none';scrollTo(0,0)}
 function home(){openTool('home')}
 function toast(t){$('toast').textContent=t;$('toast').style.display='block';setTimeout(()=>$('toast').style.display='none',1600)}
 async function copyText(id){let el=$(id),v=el.value??el.textContent;if(!v){toast('Nothing to copy');return}try{if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText(v);toast('Copied');return}}catch(e){}let ta=document.createElement('textarea');ta.value=v;ta.style.position='fixed';ta.style.left='-9999px';document.body.appendChild(ta);ta.focus();ta.select();let ok=false;try{ok=document.execCommand('copy')}catch(e){}document.body.removeChild(ta);toast(ok?'Copied':'Copy failed')}
@@ -228,8 +228,8 @@ function applyLanguage(lang){
   const timerButtons=document.querySelectorAll('#timer button');if(timerButtons[0])timerButtons[0].textContent=timerRunning?t.pause:t.start;if(timerButtons[1])timerButtons[1].textContent=t.pause;if(timerButtons[2])timerButtons[2].textContent=t.reset;
   const swButtons=document.querySelectorAll('#stopwatch button');if(swButtons[0])swButtons[0].textContent=t.start;if(swButtons[1])swButtons[1].textContent=t.pause;if(swButtons[2])swButtons[2].textContent=t.reset;
   const dateLabels=document.querySelectorAll('#date label');if(dateLabels[0])dateLabels[0].textContent=t.date1;if(dateLabels[1])dateLabels[1].textContent=t.date2;const dateBtn=document.querySelector('#date .action');if(dateBtn)dateBtn.textContent=t.calculate;
-  const randomInputs=document.querySelectorAll('#random input');if(randomInputs[0])randomInputs[0].placeholder=t.min;if(randomInputs[1])randomInputs[1].placeholder=t.max||'Max';const randomBtn=document.querySelector('#random .action');if(randomBtn)randomBtn.textContent=t.generate;
-  const textInput=$('textInput');if(textInput)textInput.placeholder=t.paste;const tr=$('textResult');if(tr){const old=tr.innerHTML.match(/<br>/g)||[];tr.innerHTML=t.characters+': 0<br>'+t.words+': 0<br>'+t.lines+': 0';analyzeText();}const tb=document.querySelectorAll('#text .action');if(tb[0])tb[0].textContent=t.uppercase;if(tb[1])tb[1].textContent=t.lower;if(tb[2])tb[2].textContent=t.copy;if(tb[3])tb[3].textContent=t.clearText;
+  const randomInputs=document.querySelectorAll('#random input');if(randomInputs[0])randomInputs[0].placeholder=t.min;if(randomInputs[1])randomInputs[1].placeholder='Max';const randomBtn=document.querySelector('#random .action');if(randomBtn)randomBtn.textContent=t.generate;
+  const textInput=$('textInput');if(textInput)textInput.placeholder=t.paste;const tr=$('textResult');if(tr){analyzeText();}const tb=document.querySelectorAll('#text .action');if(tb[0])tb[0].textContent=t.uppercase;if(tb[1])tb[1].textContent=t.lower;if(tb[2])tb[2].textContent=t.copy;if(tb[3])tb[3].textContent=t.clearText;
   const qrInput=$('qrInput');if(qrInput)qrInput.placeholder='https://example.com';const qrLabels=document.querySelectorAll('#qr label');if(qrLabels[0])qrLabels[0].textContent=t.textOrLink;const qrButtons=document.querySelectorAll('#qr .action');if(qrButtons[0])qrButtons[0].textContent=t.createQR;if(qrButtons[1])qrButtons[1].textContent=t.downloadQR;const qsmall=document.querySelector('#qr small');if(qsmall)qsmall.textContent=t.simpleQR;
 }
 (function(){applyLanguage(localStorage.getItem('pocketLang')||'en')})();</script>
