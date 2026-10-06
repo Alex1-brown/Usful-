@@ -3,8 +3,6 @@ name: Android Release
 on:
   workflow_dispatch:
   push:
-    branches:
-      - main
     tags:
       - 'v*'
 
@@ -29,6 +27,12 @@ jobs:
 
       - name: Install Capacitor
         run: npm install
+
+      - name: Prepare web assets
+        run: |
+          rm -rf www
+          mkdir -p www
+          cp index.html www/index.html
 
       - name: Add Android platform
         run: npx cap add android
