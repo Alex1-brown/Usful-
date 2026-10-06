@@ -94,7 +94,7 @@ small{color:var(--muted)}.toast{position:fixed;bottom:22px;left:50%;transform:tr
 <button class="back" onclick="home()">← Все инструменты</button><div class="card"><h2>🔤 Анализ текста</h2><textarea id="textInput" oninput="analyzeText()" placeholder="Вставь текст..."></textarea>
 <div id="textResult" class="result">Символов: 0<br>Слов: 0<br>Строк: 0</div>
 <div class="row"><button class="action secondary" onclick="upperText()">В ВЕРХНИЙ</button><button class="action secondary" onclick="lowerText()">в нижний</button></div>
-<button class="action secondary" onclick="copyText('textInput')">Копировать</button></div></section>
+<button class="action secondary" onclick="copyText('textInput')">Копировать</button><button class="action danger" onclick="clearText()">Очистить текст</button></div></section>
 
 <section id="qr" class="screen">
 <button class="back" onclick="home()">← Все инструменты</button><div class="card"><h2>🔲 QR-код</h2>
@@ -175,7 +175,7 @@ function startSW(){if(!swStart){swStart=Date.now();swInt=setInterval(renderSW,30
 function dateDiff(){let a=new Date($('date1').value),b=new Date($('date2').value);if(isNaN(a)||isNaN(b))return;$('dateResult').textContent=Math.abs(Math.round((b-a)/86400000))+' дней'}
 function randomNumber(){let a=Math.ceil(+$('rmin').value),b=Math.floor(+$('rmax').value);if(a>b)[a,b]=[b,a];$('randomResult').textContent=Math.floor(Math.random()*(b-a+1))+a}
 function analyzeText(){let t=$('textInput').value;let lines=t?t.split(/\r?\n/).length:0;$('textResult').innerHTML=`Символов: ${t.length}<br>Слов: ${(t.trim().match(/\S+/g)||[]).length}<br>Строк: ${lines}`}
-function upperText(){$('textInput').value=$('textInput').value.toUpperCase();analyzeText()}function lowerText(){$('textInput').value=$('textInput').value.toLowerCase();analyzeText()}
+function upperText(){$('textInput').value=$('textInput').value.toUpperCase();analyzeText()}function lowerText(){$('textInput').value=$('textInput').value.toLowerCase();analyzeText()}function clearText(){$('textInput').value='';analyzeText();toast('Текст очищен')}
 
 /* Local visual code. This is not a standards-compliant QR encoder yet. */
 function downloadQR(){let a=document.createElement('a');a.download='qr-code.png';a.href=$('qrCanvas').toDataURL('image/png');document.body.appendChild(a);a.click();a.remove();toast('QR сохранён как PNG')}
