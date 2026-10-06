@@ -136,8 +136,11 @@ updateCalcResult();
 }
 function clearCalc(){$('calc').value='';$('calcResult').textContent='0'}
 function evaluateCalcExpression(expr){
-let clean=expr.replace(/[^0-9+\-*/().% ]/g,'').replace(/(\d+(?:\.\d+)?)%/g,'($1/100)');
+let clean=expr.replace(/[^0-9+\-*/().% ]/g,'').replace(/\s+/g,'');
 if(!clean.trim())return 0;
+clean=clean.replace(/(\d+(?:\.\d+)?)([+\-])(\d+(?:\.\d+)?)%/g,'($1$2($1*$3/100))');
+clean=clean.replace(/(\d+(?:\.\d+)?)([*/])(\d+(?:\.\d+)?)%/g,'($1$2($3/100))');
+clean=clean.replace(/(\d+(?:\.\d+)?)%/g,'($1/100)');
 return Function('"use strict";return ('+clean+')')();
 }
 function updateCalcResult(){
