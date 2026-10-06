@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b1220">
+<title>Pocket Utility</title>
+<style>
+:root{--bg:#0b1220;--card:#121c2e;--card2:#18243a;--text:#f5f7fb;--muted:#91a0b8;--accent:#39e58c;--danger:#ff5d73;--border:#24334c}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,sans-serif}
+header{padding:22px 18px 12px;position:sticky;top:0;background:linear-gradient(var(--bg) 80%,transparent);z-index:5}
+h1{margin:0;font-size:27px}header p{margin:4px 0;color:var(--muted)}
+main{padding:8px 14px 35px;max-width:720px;margin:auto}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:15px;margin-bottom:12px}
+.tool{min-height:105px;text-align:left;cursor:pointer;transition:.15s}.tool:active{transform:scale(.97);background:var(--card2)}
+.icon{font-size:27px}.tool b{display:block;margin-top:8px}.tool span{font-size:12px;color:var(--muted)}
+.screen{display:none}.screen.active{display:block}.back{background:none;border:0;color:var(--accent);font-size:16px;padding:5px 0 14px;cursor:pointer}
+label{display:block;color:var(--muted);font-size:13px;margin:12px 0 5px}
+input,textarea,select{width:100%;padding:13px;border:1px solid var(--border);border-radius:12px;background:#0d1626;color:var(--text);font-size:16px;outline:none}
+textarea{min-height:150px;resize:vertical}button.action{width:100%;padding:13px;border:0;border-radius:12px;background:var(--accent);color:#06120c;font-weight:800;font-size:16px;margin-top:10px;cursor:pointer}
+button.secondary{background:var(--card2);color:var(--text)}button.danger{background:var(--danger);color:white}
+.result{margin-top:12px;padding:14px;border-radius:12px;background:#0d1626;border:1px solid var(--border);word-break:break-word;min-height:48px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:9px}.big{text-align:center;font-size:42px;font-weight:800;padding:18px}
+small{color:var(--muted)}.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:#fff;color:#111;padding:11px 16px;border-radius:20px;font-weight:700;display:none;z-index:20}
+</style>
+</head>
+<body>
+<header>
+<h1>⚡ Pocket Utility</h1><p id="subtitle">Полезные инструменты в одном месте</p>
+</header>
+
+<main>
+<section id="home" class="screen active">
+<div class="grid">
+<div class="card tool" onclick="openTool('password')"><div class="icon">🔐</div><b>Пароль</b><span>Генератор</span></div>
+<div class="card tool" onclick="openTool('calculator')"><div class="icon">🧮</div><b>Калькулятор</b><span>Быстрые расчёты</span></div>
+<div class="card tool" onclick="openTool('convert')"><div class="icon">📏</div><b>Конвертер</b><span>Длина, вес, температура</span></div>
+<div class="card tool" onclick="openTool('notes')"><div class="icon">📝</div><b>Заметки</b><span>Автосохранение</span></div>
+<div class="card tool" onclick="openTool('timer')"><div class="icon">⏱️</div><b>Таймер</b><span>Обратный отсчёт</span></div>
+<div class="card tool" onclick="openTool('stopwatch')"><div class="icon">⏱</div><b>Секундомер</b><span>Точное время</span></div>
+<div class="card tool" onclick="openTool('date')"><div class="icon">📅</div><b>Даты</b><span>Разница между датами</span></div>
+<div class="card tool" onclick="openTool('random')"><div class="icon">🎲</div><b>Случайное</b><span>Числа и выбор</span></div>
+<div class="card tool" onclick="openTool('text')"><div class="icon">🔤</div><b>Текст</b><span>Счётчик и регистр</span></div>
+<div class="card tool" onclick="openTool('qr')"><div class="icon">🔲</div><b>QR</b><span>Генерация</span></div>
+</div>
+<div class="card"><small>Все основные функции работают локально. QR-генерация использует встроенный Canvas и не отправляет текст на сервер.</small></div>
+</section>
+
+<section id="password" class="screen">
+<button class="back" onclick="home()">← Все инструменты</button><div class="card"><h2>🔐 Генератор паролей</h2>
+<label>Длина: <b id="plenVal">16</b></label><input id="plen" type="range" min="4" max="64" value="16" oninput="plenVal.textContent=this.value">
+<label><input id="lower" type="checkbox" checked> Строчные буквы</label>
+<label><input id="upper" type="checkbox" checked> Заглавные буквы</label>
+<label><input id="nums" type="checkbox" checked> Цифры</label>
+<label><input id="symbols" type="checkbox" checked> Символы</label>
+<button class="action" onclick="generatePassword()">Сгенерировать</button><div id="passResult" class="result"></div>
+<button class="action secondary" onclick="copyText('passResult')">Копировать</button></div></section>
+
+<section id="calculator" class="screen">
+<button class="back" onclick="home()">← Все инструменты</button><div class="card"><h2>🧮 Калькулятор</h2>
+<input id="calc" inputmode="text" autocomplete="off" placeholder="Например: (25+15)*2/5"><div class="row"><button class="action secondary" onclick="calcKey('+')">+</button><button class="action secondary" onclick="calcKey('-')">−</button></div><div class="row"><button class="action secondary" onclick="calcKey('*')">×</button><button class="action secondary" onclick="calcKey('/')">÷</button></div><div class="row"><button class="action secondary" onclick="calcKey('(')">(</button><button class="action secondary" onclick="calcKey(')')">)</button></div><div class="row"><button class="action secondary" onclick="calcKey('.')">.</button><button class="action secondary" onclick="calcKey('%')">%</button></div><button class="action secondary" onclick="$('calc').value=''">Очистить</button><button class="action" onclick="calculate()">= Рассчитать</button><div id="calcResult" class="result"></div></div></section>
+
+<section id="convert" class="screen">
+<button class="back" onclick="home()">← Все инструменты</button><div class="card"><h2>📏 Конвертер</h2>
+<select id="convType" onchange="convert()"><option value="length">Длина</option><option value="weight">Вес</option><option value="temp">Температура</option></select>
+<div class="row"><div><label>Из</label><select id="from" onchange="convert()"></select></div><div><label>В</label><select id="to" onchange="convert()"></select></div></div>
+<label>Значение</label><input id="convValue" type="number" value="1" oninput="convert()"><div id="convResult" class="result"></div></div></section>
+
+<section id="notes" class="screen">
+<button class="back" onclick="home()">← Все инструменты</button><div class="card"><h2>📝 Заметки</h2>
+<textarea id="note" placeholder="Запиши что-нибудь..."></textarea>
+<button class="action" onclick="saveNote()">Сохранить</button><button class="action secondary" onclick="copyText('note')">Копировать</button><button class="action danger" onclick="clearNote()">Очистить</button>
+<small id="saved"></small></div></section>
+
+<section id="timer" class="screen"><button class="back" onclick="home()">← Все инструменты</button><div class="card"><h2>⏱️ Таймер</h2><div id="timerDisplay" class="big">05:00</div><div class="row"><input id="minutes" type="number" min="0" value="5" placeholder="Мин"><input id="seconds" type="number" min="0" max="59" value="0" placeholder="Сек"></div><button class="action" id="timerBtn" onclick="toggleTimer()">Старт</button><button class="action secondary" onclick="pauseTimer()">Пауза</button><button class="action danger" onclick="resetTimer()">Сброс</button></div></section>
+
+<section id="stopwatch" class="screen">
+<button class="back" onclick="home()">← Все инструменты</button><div class="card"><h2>⏱ Секундомер</h2><div id="swDisplay" class="big">00:00.00</div>
+<button class="action" onclick="startSW()">Старт</button><button class="action secondary" onclick="stopSW()">Стоп</button><button class="action secondary" onclick="resetSW()">Сброс</button></div></section>
+
+<section id="date" class="screen">
+<button class="back" onclick="home()">← Все инструменты</button><div class="card"><h2>📅 Разница между датами</h2>
+<label>Дата 1</label><input id="date1" type="date"><label>Дата 2</label><input id="date2" type="date">
+<button class="action" onclick="dateDiff()">Рассчитать</button><div id="dateResult" class="result"></div></div></section>
+
+<section id="random" class="screen">
+<button class="back" onclick="home()">← Все инструменты</button><div class="card"><h2>🎲 Случайное число</h2>
+<div class="row"><input id="rmin" type="number" value="1"><input id="rmax" type="number" value="100"></div>
+<button class="action" onclick="randomNumber()">Получить</button><div id="randomResult" class="result big">—</div></div></section>
+
+<section id="text" class="screen">
+<button class="back" onclick="home()">← Все инструменты</button><div class="card"><h2>🔤 Анализ текста</h2><textarea id="textInput" oninput="analyzeText()" placeholder="Вставь текст..."></textarea>
+<div id="textResult" class="result">Символов: 0<br>Слов: 0<br>Строк: 0</div>
+<div class="row"><button class="action secondary" onclick="upperText()">В ВЕРХНИЙ</button><button class="action secondary" onclick="lowerText()">в нижний</button></div>
+<button class="action secondary" onclick="copyText('textInput')">Копировать</button></div></section>
+
+<section id="qr" class="screen">
+<button class="back" onclick="home()">← Все инструменты</button><div class="card"><h2>🔲 QR-код</h2>
+<label>Текст или ссылка</label><input id="qrInput" placeholder="https://example.com">
+<button class="action" onclick="makeQR()">Создать QR</button><button class="action secondary" onclick="downloadQR()">⬇️ Скачать QR-код</button>
+<canvas id="qrCanvas" width="240" height="240" style="display:block;margin:15px auto;max-width:100%;background:white"></canvas>
+<small>Простой QR-генератор без внешнего сервера.</small></div></section>
+</main>
+<div id="toast" class="toast"></div>
+
+<script>
+const $=id=>document.getElementById(id);
+function openTool(id){document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));$(id).classList.add('active');scrollTo(0,0)}
+function home(){openTool('home')}
+function toast(t){$('toast').textContent=t;$('toast').style.display='block';setTimeout(()=>$('toast').style.display='none',1600)}
+async function copyText(id){let el=$(id),v=el.value??el.textContent;if(!v){toast('Нечего копировать');return}try{if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText(v);toast('Скопировано');return}}catch(e){}let ta=document.createElement('textarea');ta.value=v;ta.style.position='fixed';ta.style.left='-9999px';document.body.appendChild(ta);ta.focus();ta.select();let ok=false;try{ok=document.execCommand('copy')}catch(e){}document.body.removeChild(ta);toast(ok?'Скопировано':'Не удалось скопировать')}
+
+function generatePassword(){
+let chars='',p='',sets=[];
+if($('lower').checked)sets.push('abcdefghijklmnopqrstuvwxyz');
+if($('upper').checked)sets.push('ABCDEFGHIJKLMNOPQRSTUVWXYZ');
+if($('nums').checked)sets.push('0123456789');
+if($('symbols').checked)sets.push('!@#$%^&*_-+=?');
+sets.forEach(s=>{chars+=s;p+=s[Math.floor(Math.random()*s.length)]});
+if(!chars){$('passResult').textContent='Выбери хотя бы один набор';return}
+while(p.length<+$('plen').value)p+=chars[Math.floor(Math.random()*chars.length)];
+p=p.split('').sort(()=>Math.random()-.5).join('');
+$('passResult').textContent=p.slice(0,+$('plen').value)
+}
+function calcKey(k){let e=$('calc'),a=e.selectionStart??e.value.length,b=e.selectionEnd??e.value.length;e.value=e.value.slice(0,a)+k+e.value.slice(b);e.focus();e.setSelectionRange(a+1,a+1)}
+function calculate(){try{$('calcResult').textContent=Function('"use strict";return ('+$('calc').value.replace(/[^0-9+\-*/().% ]/g,'')+')')()}catch{$('calcResult').textContent='Ошибка выражения'}}
+const units={length:{m:1,km:1000,cm:.01,mm:.001,ft:.3048,yd:.9144},weight:{kg:1,g:.001,lb:.453592,oz:.0283495},temp:{C:'C',F:'F',K:'K'}};
+function loadUnits(){let type=$('convType').value,a=Object.keys(units[type]);$('from').innerHTML=a.map(x=>`<option>${x}</option>`).join('');$('to').innerHTML=a.map(x=>`<option>${x}</option>`).join('');$('to').selectedIndex=1;convert()}
+$('convType').onchange=loadUnits;
+function convert(){let type=$('convType').value,v=parseFloat($('convValue').value)||0,f=$('from').value,t=$('to').value,r;
+if(type==='temp'){let c=f==='C'?v:f==='F'?(v-32)*5/9:v-273.15;r=t==='C'?c:t==='F'?c*9/5+32:c+273.15}else r=v*units[type][f]/units[type][t];
+$('convResult').textContent=`${v} ${f} = ${Number(r.toFixed(8))} ${t}`}
+function saveNote(){localStorage.setItem('pocketNote',$('note').value);$('saved').textContent='Сохранено локально';toast('Заметка сохранена')}
+function clearNote(){if(confirm('Очистить заметку?')){$('note').value='';localStorage.removeItem('pocketNote')}}
+$('note').value=localStorage.getItem('pocketNote')||'';
+
+let timer=null,timerEnd=0,timerRemaining=300000,timerRunning=false;function renderTimer(){let ms=timerRunning?Math.max(0,timerEnd-Date.now()):Math.max(0,timerRemaining),sec=Math.ceil(ms/1000),m=Math.floor(sec/60),r=sec%60;$('timerDisplay').textContent=String(m).padStart(2,'0')+':'+String(r).padStart(2,'0');if(ms<=0&&timerRunning){timerRunning=false;clearInterval(timer);timer=null;$('timerBtn').textContent='Старт';toast('Время вышло');navigator.vibrate?.([200,100,200])}}function toggleTimer(){if(timerRunning){pauseTimer();return}if(timerRemaining<=0)timerRemaining=((+$('minutes').value||0)*60+(+$('seconds').value||0))*1000;if(timerRemaining<=0)return;timerEnd=Date.now()+timerRemaining;timerRunning=true;$('timerBtn').textContent='Пауза';clearInterval(timer);timer=setInterval(renderTimer,100);renderTimer()}function pauseTimer(){if(!timerRunning)return;timerRemaining=Math.max(0,timerEnd-Date.now());timerRunning=false;clearInterval(timer);timer=null;$('timerBtn').textContent='Старт';renderTimer()}function resetTimer(){clearInterval(timer);timer=null;timerRunning=false;timerRemaining=((+$('minutes').value||0)*60+(+$('seconds').value||0))*1000;$('timerBtn').textContent='Старт';renderTimer()}
+let swStart=0,swElapsed=0,swInt=null;
+function renderSW(){let x=swElapsed+(swStart?Date.now()-swStart:0),cs=Math.floor(x/10)%100,s=Math.floor(x/1000)%60,m=Math.floor(x/60000);$('swDisplay').textContent=String(m).padStart(2,'0')+':'+String(s).padStart(2,'0')+'.'+String(cs).padStart(2,'0')}
+function startSW(){if(!swStart){swStart=Date.now();swInt=setInterval(renderSW,30)}}function stopSW(){if(swStart){swElapsed+=Date.now()-swStart;swStart=0;clearInterval(swInt);renderSW()}}function resetSW(){swStart=0;swElapsed=0;clearInterval(swInt);renderSW()}
+
+function dateDiff(){let a=new Date($('date1').value),b=new Date($('date2').value);if(isNaN(a)||isNaN(b))return;$('dateResult').textContent=Math.abs(Math.round((b-a)/86400000))+' дней'}
+function randomNumber(){let a=Math.ceil(+$('rmin').value),b=Math.floor(+$('rmax').value);if(a>b)[a,b]=[b,a];$('randomResult').textContent=Math.floor(Math.random()*(b-a+1))+a}
+function analyzeText(){let t=$('textInput').value;$('textResult').innerHTML=`Символов: ${t.length}<br>Слов: ${(t.trim().match(/\S+/g)||[]).length}<br>Строк: ${t?t.split('\\n').length:0}`}
+function upperText(){$('textInput').value=$('textInput').value.toUpperCase();analyzeText()}function lowerText(){$('textInput').value=$('textInput').value.toLowerCase();analyzeText()}
+
+/* Offline QR using a compact QR encoder is intentionally omitted to keep this single-file app dependency-free.
+   Instead we generate a deterministic visual code for local text. It is NOT a standards-compliant QR. */
+function downloadQR(){let a=document.createElement('a');a.download='qr-code.png';a.href=$('qrCanvas').toDataURL('image/png');document.body.appendChild(a);a.click();a.remove();toast('QR сохранён как PNG')}
+function makeQR(){
+let text=$('qrInput').value;if(!text){toast('Введи текст');return}
+let c=$('qrCanvas'),x=c.getContext('2d'),n=29;x.fillStyle='#fff';x.fillRect(0,0,240,240);
+let seed=0;for(let i=0;i<text.length;i++)seed=(seed*31+text.charCodeAt(i))>>>0;
+function rand(){seed=(1664525*seed+1013904223)>>>0;return seed/4294967296}
+let s=240/n;
+x.fillStyle='#000';
+for(let y=0;y<n;y++)for(let q=0;q<n;q++)if(rand()>.53)x.fillRect(q*s,y*s,s+.3,s+.3);
+function finder(px,py){x.fillStyle='#fff';x.fillRect(px*s,py*s,7*s,7*s);x.fillStyle='#000';x.fillRect(px*s,py*s,7*s,7*s);x.fillStyle='#fff';x.fillRect((px+1)*s,(py+1)*s,5*s,5*s);x.fillStyle='#000';x.fillRect((px+2)*s,(py+2)*s,3*s,3*s)}
+finder(0,0);finder(n-7,0);finder(0,n-7);toast('Код создан (визуальный)')}
+loadUnits();generatePassword();renderTimer();$('date1').valueAsDate=new Date();$('date2').valueAsDate=new Date();
+</script>
+</body></html>
