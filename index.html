@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#0b1220">
-<title>Useful</title>
+<title>Useful Pro</title>
 <style>
 :root{--bg:#0b1220;--card:#121c2e;--card2:#18243a;--text:#f5f7fb;--muted:#91a0b8;--accent:#39e58c;--danger:#ff5d73;--border:#24334c}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,sans-serif}
@@ -26,7 +26,7 @@ small{color:var(--muted)}.toast{position:fixed;bottom:22px;left:50%;transform:tr
 </head>
 <body>
 <header>
-<h1>⚡ Useful</h1><p id="subtitle" data-i18n="subtitle">Useful tools in one place</p><div id="languageSwitcher" style="margin-top:10px"><button class="action secondary" style="width:auto;margin:0 6px 0 0;padding:8px 12px" onclick="setLanguage('en')">English</button><button class="action secondary" style="width:auto;margin:0;padding:8px 12px" onclick="setLanguage('ru')">Русский</button></div>
+<h1>⚡ Useful Pro</h1><p id="subtitle" data-i18n="subtitle">Useful tools in one place</p><div id="languageSwitcher" style="margin-top:10px"><button class="action secondary" style="width:auto;margin:0 6px 0 0;padding:8px 12px" onclick="setLanguage('en')">English</button><button class="action secondary" style="width:auto;margin:0;padding:8px 12px" onclick="setLanguage('ru')">Русский</button></div>
 </header>
 
 <main>
@@ -43,6 +43,7 @@ small{color:var(--muted)}.toast{position:fixed;bottom:22px;left:50%;transform:tr
 <div class="card tool" onclick="openTool('text')"><div class="icon">🔤</div><b data-i18n="text">Text</b><span data-i18n="textDesc">Counter and case</span></div>
 <div class="card tool" onclick="openTool('qr')"><div class="icon">🔲</div><b data-i18n="qr">QR</b><span data-i18n="qrDesc">Generation</span></div>
 </div>
+<div class="card" style="border-color:var(--accent)"><h2 style="margin:0 0 6px">✨ Useful Pro</h2><small data-i18n="proInfo">Advanced tools: password controls, calculation history and note export. Your data stays on this device.</small></div>
 <div class="card"><small data-i18n="localInfo">All main functions work locally. QR generation uses the built-in Canvas and does not send text to a server.</small></div>
 </section>
 
@@ -53,14 +54,18 @@ small{color:var(--muted)}.toast{position:fixed;bottom:22px;left:50%;transform:tr
 <label><input id="upper" type="checkbox" checked> <span data-i18n="upper">Uppercase letters</span></label>
 <label><input id="nums" type="checkbox" checked> <span data-i18n="numbers">Numbers</span></label>
 <label><input id="symbols" type="checkbox" checked> <span data-i18n="symbols">Symbols</span></label>
+<label><input id="excludeSimilar" type="checkbox" checked> <span data-i18n="excludeSimilar">Exclude similar characters (Il1O0)</span></label>
+<label><input id="noRepeat" type="checkbox"> <span data-i18n="noRepeat">Avoid repeated characters</span></label>
 <button class="action" data-i18n="generate" onclick="generatePassword()">Generate</button><div id="passResult" class="result"></div>
+<div id="passwordStrength" class="result" style="min-height:0" data-i18n="strengthHint">Password strength appears here</div>
 <button class="action secondary" data-i18n="copy" onclick="copyText('passResult')">Copy</button></div></section>
 
 <section id="calculator" class="screen">
 <button class="back" data-i18n="back" onclick="home()">← All tools</button><div class="card"><h2>🧮 <span data-i18n="calculator">Calculator</span></h2>
 <input id="calc" type="text" inputmode="none" readonly autocomplete="off" data-i18n-placeholder="enterExpression" placeholder="Enter an expression using the buttons below">
 <div id="calcResult" class="result" style="margin-top:10px;margin-bottom:10px;min-height:48px">0</div>
-<div class="calcpad"><button onclick="calcKey('7')">7</button><button onclick="calcKey('8')">8</button><button onclick="calcKey('9')">9</button><button onclick="calcKey('/')">÷</button><button onclick="calcKey('4')">4</button><button onclick="calcKey('5')">5</button><button onclick="calcKey('6')">6</button><button onclick="calcKey('*')">×</button><button onclick="calcKey('1')">1</button><button onclick="calcKey('2')">2</button><button onclick="calcKey('3')">3</button><button onclick="calcKey('-')">−</button><button onclick="calcKey('0')">0</button><button onclick="calcKey('.')">.</button><button onclick="calcKey('%')">%</button><button onclick="calcKey('+')">+</button><button onclick="calcKey('(')">(</button><button onclick="calcKey(')')">)</button><button onclick="backspaceCalc()">⌫</button><button onclick="clearCalc()">C</button><button onclick="calculate()">=</button></div></div></section>
+<div class="calcpad"><button onclick="calcKey('7')">7</button><button onclick="calcKey('8')">8</button><button onclick="calcKey('9')">9</button><button onclick="calcKey('/')">÷</button><button onclick="calcKey('4')">4</button><button onclick="calcKey('5')">5</button><button onclick="calcKey('6')">6</button><button onclick="calcKey('*')">×</button><button onclick="calcKey('1')">1</button><button onclick="calcKey('2')">2</button><button onclick="calcKey('3')">3</button><button onclick="calcKey('-')">−</button><button onclick="calcKey('0')">0</button><button onclick="calcKey('.')">.</button><button onclick="calcKey('%')">%</button><button onclick="calcKey('+')">+</button><button onclick="calcKey('(')">(</button><button onclick="calcKey(')')">)</button><button onclick="backspaceCalc()">⌫</button><button onclick="clearCalc()">C</button><button onclick="calculate()">=</button></div>
+<h3 data-i18n="calcHistory">Calculation history</h3><div id="calcHistory" class="result"></div><button class="action secondary" data-i18n="clearHistory" onclick="clearCalcHistory()">Clear history</button></div></section>
 
 <section id="convert" class="screen">
 <button class="back" data-i18n="back" onclick="home()">← All tools</button><div class="card"><h2>📏 <span data-i18n="converter">Converter</span></h2>
@@ -71,7 +76,7 @@ small{color:var(--muted)}.toast{position:fixed;bottom:22px;left:50%;transform:tr
 <section id="notes" class="screen">
 <button class="back" data-i18n="back" onclick="home()">← All tools</button><div class="card"><h2>📝 <span data-i18n="notes">Notes</span></h2>
 <textarea id="note" data-i18n-placeholder="write" placeholder="Write something..."></textarea>
-<button class="action" data-i18n="save" onclick="saveNote()">Save</button><button class="action secondary" data-i18n="copy" onclick="copyText('note')">Copy</button><button class="action danger" data-i18n="clear" onclick="clearNote()">Clear</button>
+<button class="action" data-i18n="save" onclick="saveNote()">Save</button><button class="action secondary" data-i18n="copy" onclick="copyText('note')">Copy</button><button class="action secondary" data-i18n="exportNote" onclick="exportNote()">Export note as TXT</button><button class="action danger" data-i18n="clear" onclick="clearNote()">Clear</button>
 <small id="saved"></small></div></section>
 
 <section id="timer" class="screen"><button class="back" data-i18n="back" onclick="home()">← All tools</button><div class="card"><h2>⏱️ <span data-i18n="timer">Timer</span></h2><div id="timerDisplay" class="big">05:00</div><div class="row"><input id="minutes" type="number" min="0" value="5" data-i18n-placeholder="min" placeholder="Min"><input id="seconds" type="number" min="0" max="59" value="0" data-i18n-placeholder="sec" placeholder="Sec"></div><button class="action" id="timerBtn" data-i18n="start" onclick="toggleTimer()">Start</button><button class="action secondary" data-i18n="pause" onclick="pauseTimer()">Pause</button><button class="action danger" data-i18n="reset" onclick="resetTimer()">Reset</button></div></section>
@@ -112,17 +117,33 @@ function home(){openTool('home')}
 function toast(t){$('toast').textContent=t;$('toast').style.display='block';setTimeout(()=>$('toast').style.display='none',1600)}
 async function copyText(id){let el=$(id),v=el.value??el.textContent;if(!v){toast(t('nothing'));return}try{if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText(v);toast(t('copied'));return}}catch(e){}let ta=document.createElement('textarea');ta.value=v;ta.style.position='fixed';ta.style.left='-9999px';document.body.appendChild(ta);ta.focus();ta.select();let ok=false;try{ok=document.execCommand('copy')}catch(e){}document.body.removeChild(ta);toast(ok?t('copied'):t('copyFailed'))}
 
+function secureIndex(max){const a=new Uint32Array(1);crypto.getRandomValues(a);return a[0]%max}
 function generatePassword(){
-let chars='',p='',sets=[];
+let sets=[];
 if($('lower').checked)sets.push('abcdefghijklmnopqrstuvwxyz');
 if($('upper').checked)sets.push('ABCDEFGHIJKLMNOPQRSTUVWXYZ');
 if($('nums').checked)sets.push('0123456789');
 if($('symbols').checked)sets.push('!@#$%^&*_-+=?');
-sets.forEach(s=>{chars+=s;p+=s[Math.floor(Math.random()*s.length)]});
-if(!chars){$('passResult').textContent=t('chooseSet');return}
-while(p.length<+$('plen').value)p+=chars[Math.floor(Math.random()*chars.length)];
-p=p.split('').sort(()=>Math.random()-.5).join('');
-$('passResult').textContent=p.slice(0,+$('plen').value)
+let chars=sets.join('');
+if($('excludeSimilar').checked){chars=chars.replace(/[Il1O0]/g,'');sets=sets.map(s=>s.replace(/[Il1O0]/g,''))}
+if(!chars){$('passResult').textContent=t('chooseSet');$('passwordStrength').textContent='';return}
+const len=+$('plen').value;
+let pool=sets.filter(s=>s.length);
+if($('noRepeat').checked&&len>chars.length){$('passResult').textContent=t('noRepeatTooLong');$('passwordStrength').textContent='';return}
+let p='';
+if($('noRepeat').checked){
+  let available=chars.split('');
+  while(p.length<len){const i=secureIndex(available.length);p+=available.splice(i,1)[0]}
+}else{
+  pool.forEach(s=>{p+=s[secureIndex(s.length)]});
+  while(p.length<len)p+=chars[secureIndex(chars.length)];
+  p=p.split('').sort(()=>secureIndex(2)).join('');
+}
+p=p.slice(0,len);
+$('passResult').textContent=p;
+const poolSize=chars.length, entropy=len*Math.log2(poolSize);
+const level=entropy<40?t('weak'):entropy<70?t('medium'):t('strong');
+$('passwordStrength').textContent=t('strength')+': '+level+' · '+Math.round(entropy)+' bits';
 }
 function calcKey(k){
 let e=$('calc');
@@ -153,9 +174,31 @@ $('calcResult').textContent=expr+' = '+(Number.isFinite(value)?Number(value.toFi
 }
 function calculate(){
 try{
-let value=evaluateCalcExpression($('calc').value);
-$('calcResult').textContent=$('calc').value+' = '+(Number.isFinite(value)?Number(value.toFixed(12)):t('error'));
+const expr=$('calc').value;
+let value=evaluateCalcExpression(expr);
+const result=Number.isFinite(value)?Number(value.toFixed(12)):t('error');
+$('calcResult').textContent=expr+' = '+result;
+if(expr.trim()&&Number.isFinite(value)){
+  let history=JSON.parse(localStorage.getItem('usefulCalcHistory')||'[]');
+  history.unshift({expr,result:String(result),time:Date.now()});
+  localStorage.setItem('usefulCalcHistory',JSON.stringify(history.slice(0,20)));
+  renderCalcHistory();
+}
 }catch{$('calcResult').textContent=t('expressionError')}
+}
+function renderCalcHistory(){
+const el=$('calcHistory');if(!el)return;
+const history=JSON.parse(localStorage.getItem('usefulCalcHistory')||'[]');
+el.innerHTML=history.length?history.map(x=>'<div style="padding:7px 0;border-bottom:1px solid var(--border)">'+escapeHistory(x.expr)+' = <b>'+escapeHistory(x.result)+'</b></div>').join(''):t('historyEmpty');
+}
+function escapeHistory(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function clearCalcHistory(){localStorage.removeItem('usefulCalcHistory');renderCalcHistory();toast(t('historyCleared'))}
+function exportNote(){
+const value=$('note').value;
+if(!value.trim()){toast(t('nothing'));return}
+const blob=new Blob([value],{type:'text/plain;charset=utf-8'});
+const url=URL.createObjectURL(blob),a=document.createElement('a');
+a.href=url;a.download='useful-note.txt';document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);toast(t('noteExported'));
 }
 const units={length:{m:1,km:1000,cm:.01,mm:.001,ft:.3048,yd:.9144},weight:{kg:1,g:.001,lb:.453592,oz:.0283495},temp:{C:'C',F:'F',K:'K'}};
 function loadUnits(){let type=$('convType').value,a=Object.keys(units[type]);$('from').innerHTML=a.map(x=>`<option>${x}</option>`).join('');$('to').innerHTML=a.map(x=>`<option>${x}</option>`).join('');$('to').selectedIndex=1;convert()}
@@ -2478,11 +2521,11 @@ var qrcode = function() {
 
 function makeQR(){let text=$('qrInput').value;if(!text){toast(t('enterText'));return}try{let qr=qrcode(0,'M');qr.addData(text,'Byte');qr.make();let n=qr.getModuleCount(),c=$('qrCanvas'),x=c.getContext('2d'),quiet=4,total=n+quiet*2,s=Math.floor(Math.min(c.width,c.height)/total),size=total*s,off=Math.floor((c.width-size)/2);x.fillStyle='#fff';x.fillRect(0,0,c.width,c.height);x.fillStyle='#000';for(let r=0;r<n;r++)for(let col=0;col<n;col++)if(qr.isDark(r,col))x.fillRect(off+(col+quiet)*s,off+(r+quiet)*s,s,s);toast(t('codeCreated'))}catch(e){toast(t('qrTooLong'))}}
 async function downloadQR(){const dataUrl=$('qrCanvas').toDataURL('image/png');const base64=dataUrl.split(',')[1];try{const plugins=window.Capacitor?.Plugins;const fs=plugins?.Filesystem;const share=plugins?.Share;if(fs&&share){const saved=await fs.writeFile({path:'qr-code.png',data:base64,directory:'CACHE'});await share.share({title:'QR Code',text:'QR code',files:[saved.uri],dialogTitle:t('saveQRDialog')});toast(t('qrReady'));return}}catch(e){console.error('QR save/share failed',e)}try{const a=document.createElement('a');a.download='qr-code.png';a.href=dataUrl;document.body.appendChild(a);a.click();a.remove();toast(t('qrDownloadStarted'))}catch(e){toast(t('qrSaveFailed'))}}
-loadUnits();generatePassword();renderTimer();$('date1').valueAsDate=new Date();$('date2').valueAsDate=new Date();
+loadUnits();generatePassword();renderCalcHistory();renderTimer();$('date1').valueAsDate=new Date();$('date2').valueAsDate=new Date();
 
 const I18N={
-en:{subtitle:"Useful tools in one place",back:"← All tools",password:"Password",passwordDesc:"Generator",calculator:"Calculator",calculatorDesc:"Quick calculations",converter:"Converter",converterDesc:"Length, weight, temperature",notes:"Notes",notesDesc:"Auto-save",timer:"Timer",timerDesc:"Countdown",stopwatch:"Stopwatch",stopwatchDesc:"Precise time",dates:"Dates",datesDesc:"Date difference",random:"Random",randomDesc:"Numbers and choices",text:"Text",textDesc:"Counter and case",qr:"QR",qrDesc:"Generation",localInfo:"All main functions work locally. QR generation uses the built-in Canvas and does not send text to a server.",generatorPassword:"Password Generator",length:"Length:",lower:"Lowercase letters",upper:"Uppercase letters",numbers:"Numbers",symbols:"Symbols",generate:"Generate",copy:"Copy",enterExpression:"Enter an expression using the buttons below",lengthUnit:"Length",weight:"Weight",temperature:"Temperature",from:"From",to:"To",value:"Value",write:"Write something...",save:"Save",clear:"Clear",min:"Min",sec:"Sec",start:"Start",pause:"Pause",reset:"Reset",stop:"Stop",calculate:"Calculate",max:"Max",randomNumber:"Random number",paste:"Paste text...",characters:"Characters",words:"Words",lines:"Lines",uppercase:"UPPERCASE",lowercase:"lowercase",clearText:"Clear text",textAnalyzer:"Text Analyzer",textOrLink:"Text or link",createQR:"Create QR",downloadQR:"⬇️ Save QR Code",saveQRDialog:"Save QR Code",qrReady:"QR file is ready — choose where to save it",qrDownloadStarted:"QR download started",qrSaveFailed:"Could not save QR code",simpleQR:"Simple QR generator without an external server.",nothing:"Nothing to copy",copied:"Copied",copyFailed:"Copy failed",chooseSet:"Choose at least one character set",error:"Error",expressionError:"Expression error",saved:"Saved locally",noteSaved:"Note saved",clearNoteQ:"Clear note?",timeUp:"Time is up",textCleared:"Text cleared",codeCreated:"Code created",qrSaved:"QR saved as PNG",enterText:"Enter text",qrTooLong:"QR text is too long",days:"days"},
-ru:{subtitle:"Полезные инструменты в одном месте",back:"← Все инструменты",password:"Пароль",passwordDesc:"Генератор",calculator:"Калькулятор",calculatorDesc:"Быстрые расчёты",converter:"Конвертер",converterDesc:"Длина, вес, температура",notes:"Заметки",notesDesc:"Автосохранение",timer:"Таймер",timerDesc:"Обратный отсчёт",stopwatch:"Секундомер",stopwatchDesc:"Точное время",dates:"Даты",datesDesc:"Разница между датами",random:"Случайное",randomDesc:"Числа и выбор",text:"Текст",textDesc:"Счётчик и регистр",qr:"QR",qrDesc:"Генерация",localInfo:"Все основные функции работают локально. QR-генерация использует встроенный Canvas и не отправляет текст на сервер.",generatorPassword:"Генератор паролей",length:"Длина:",lower:"Строчные буквы",upper:"Заглавные буквы",numbers:"Цифры",symbols:"Символы",generate:"Сгенерировать",copy:"Копировать",enterExpression:"Введи выражение кнопками ниже",lengthUnit:"Длина",weight:"Вес",temperature:"Температура",from:"Из",to:"В",value:"Значение",write:"Запиши что-нибудь...",save:"Сохранить",clear:"Очистить",min:"Мин",sec:"Сек",start:"Старт",pause:"Пауза",reset:"Сброс",stop:"Стоп",calculate:"Рассчитать",max:"Макс",randomNumber:"Случайное число",paste:"Вставь текст...",characters:"Символов",words:"Слов",lines:"Строк",uppercase:"В ВЕРХНИЙ",lowercase:"в нижний",clearText:"Очистить текст",textAnalyzer:"Анализ текста",textOrLink:"Текст или ссылка",createQR:"Создать QR",downloadQR:"⬇️ Сохранить QR-код",saveQRDialog:"Сохранить QR-код",qrReady:"QR-файл готов — выбери, куда его сохранить",qrDownloadStarted:"Загрузка QR началась",qrSaveFailed:"Не удалось сохранить QR-код",simpleQR:"Простой QR-генератор без внешнего сервера.",nothing:"Нечего копировать",copied:"Скопировано",copyFailed:"Не удалось скопировать",chooseSet:"Выбери хотя бы один набор символов",error:"Ошибка",expressionError:"Ошибка выражения",saved:"Сохранено локально",noteSaved:"Заметка сохранена",clearNoteQ:"Очистить заметку?",timeUp:"Время вышло",textCleared:"Текст очищен",codeCreated:"Код создан",qrSaved:"QR сохранён как PNG",enterText:"Введи текст",qrTooLong:"Текст слишком длинный для QR-кода",days:"дней"}
+en:{subtitle:"Useful tools in one place",proInfo:"Advanced tools: password controls, calculation history and note export. Your data stays on this device.",excludeSimilar:"Exclude similar characters (Il1O0)",noRepeat:"Avoid repeated characters",strengthHint:"Password strength appears here",strength:"Strength",weak:"Weak",medium:"Medium",strong:"Strong",noRepeatTooLong:"Length exceeds the available unique characters",calcHistory:"Calculation history",clearHistory:"Clear history",historyEmpty:"No calculations yet",historyCleared:"History cleared",exportNote:"Export note as TXT",noteExported:"Note exported",back:"← All tools",password:"Password",passwordDesc:"Generator",calculator:"Calculator",calculatorDesc:"Quick calculations",converter:"Converter",converterDesc:"Length, weight, temperature",notes:"Notes",notesDesc:"Auto-save",timer:"Timer",timerDesc:"Countdown",stopwatch:"Stopwatch",stopwatchDesc:"Precise time",dates:"Dates",datesDesc:"Date difference",random:"Random",randomDesc:"Numbers and choices",text:"Text",textDesc:"Counter and case",qr:"QR",qrDesc:"Generation",localInfo:"All main functions work locally. QR generation uses the built-in Canvas and does not send text to a server.",generatorPassword:"Password Generator",length:"Length:",lower:"Lowercase letters",upper:"Uppercase letters",numbers:"Numbers",symbols:"Symbols",generate:"Generate",copy:"Copy",enterExpression:"Enter an expression using the buttons below",lengthUnit:"Length",weight:"Weight",temperature:"Temperature",from:"From",to:"To",value:"Value",write:"Write something...",save:"Save",clear:"Clear",min:"Min",sec:"Sec",start:"Start",pause:"Pause",reset:"Reset",stop:"Stop",calculate:"Calculate",max:"Max",randomNumber:"Random number",paste:"Paste text...",characters:"Characters",words:"Words",lines:"Lines",uppercase:"UPPERCASE",lowercase:"lowercase",clearText:"Clear text",textAnalyzer:"Text Analyzer",textOrLink:"Text or link",createQR:"Create QR",downloadQR:"⬇️ Save QR Code",saveQRDialog:"Save QR Code",qrReady:"QR file is ready — choose where to save it",qrDownloadStarted:"QR download started",qrSaveFailed:"Could not save QR code",simpleQR:"Simple QR generator without an external server.",nothing:"Nothing to copy",copied:"Copied",copyFailed:"Copy failed",chooseSet:"Choose at least one character set",error:"Error",expressionError:"Expression error",saved:"Saved locally",noteSaved:"Note saved",clearNoteQ:"Clear note?",timeUp:"Time is up",textCleared:"Text cleared",codeCreated:"Code created",qrSaved:"QR saved as PNG",enterText:"Enter text",qrTooLong:"QR text is too long",days:"days"},
+ru:{subtitle:"Полезные инструменты в одном месте",proInfo:"Расширенные функции: настройки паролей, история вычислений и экспорт заметок. Данные остаются на устройстве.",excludeSimilar:"Исключать похожие символы (Il1O0)",noRepeat:"Не повторять символы",strengthHint:"Здесь появится надёжность пароля",strength:"Надёжность",weak:"Слабый",medium:"Средний",strong:"Сильный",noRepeatTooLong:"Длина больше числа доступных уникальных символов",calcHistory:"История вычислений",clearHistory:"Очистить историю",historyEmpty:"Вычислений пока нет",historyCleared:"История очищена",exportNote:"Экспорт заметки в TXT",noteExported:"Заметка экспортирована",back:"← Все инструменты",password:"Пароль",passwordDesc:"Генератор",calculator:"Калькулятор",calculatorDesc:"Быстрые расчёты",converter:"Конвертер",converterDesc:"Длина, вес, температура",notes:"Заметки",notesDesc:"Автосохранение",timer:"Таймер",timerDesc:"Обратный отсчёт",stopwatch:"Секундомер",stopwatchDesc:"Точное время",dates:"Даты",datesDesc:"Разница между датами",random:"Случайное",randomDesc:"Числа и выбор",text:"Текст",textDesc:"Счётчик и регистр",qr:"QR",qrDesc:"Генерация",localInfo:"Все основные функции работают локально. QR-генерация использует встроенный Canvas и не отправляет текст на сервер.",generatorPassword:"Генератор паролей",length:"Длина:",lower:"Строчные буквы",upper:"Заглавные буквы",numbers:"Цифры",symbols:"Символы",generate:"Сгенерировать",copy:"Копировать",enterExpression:"Введи выражение кнопками ниже",lengthUnit:"Длина",weight:"Вес",temperature:"Температура",from:"Из",to:"В",value:"Значение",write:"Запиши что-нибудь...",save:"Сохранить",clear:"Очистить",min:"Мин",sec:"Сек",start:"Старт",pause:"Пауза",reset:"Сброс",stop:"Стоп",calculate:"Рассчитать",max:"Макс",randomNumber:"Случайное число",paste:"Вставь текст...",characters:"Символов",words:"Слов",lines:"Строк",uppercase:"В ВЕРХНИЙ",lowercase:"в нижний",clearText:"Очистить текст",textAnalyzer:"Анализ текста",textOrLink:"Текст или ссылка",createQR:"Создать QR",downloadQR:"⬇️ Сохранить QR-код",saveQRDialog:"Сохранить QR-код",qrReady:"QR-файл готов — выбери, куда его сохранить",qrDownloadStarted:"Загрузка QR началась",qrSaveFailed:"Не удалось сохранить QR-код",simpleQR:"Простой QR-генератор без внешнего сервера.",nothing:"Нечего копировать",copied:"Скопировано",copyFailed:"Не удалось скопировать",chooseSet:"Выбери хотя бы один набор символов",error:"Ошибка",expressionError:"Ошибка выражения",saved:"Сохранено локально",noteSaved:"Заметка сохранена",clearNoteQ:"Очистить заметку?",timeUp:"Время вышло",textCleared:"Текст очищен",codeCreated:"Код создан",qrSaved:"QR сохранён как PNG",enterText:"Введи текст",qrTooLong:"Текст слишком длинный для QR-кода",days:"дней"}
 };
 let currentLang=localStorage.getItem('pocketLang')==='ru'?'ru':'en';
 function t(key){return (I18N[currentLang]&&I18N[currentLang][key])||I18N.en[key]||key}
