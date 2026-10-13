@@ -1,8 +1,8 @@
 {
-  "name": "pocket-utility",
-  "version": "1.0.0",
+  "name": "useful-pro",
+  "version": "2.0.0",
   "private": true,
-  "description": "Pocket Utility - offline utility tools",
+  "description": "Useful Pro - advanced offline utility tools",
   "scripts": {
     "cap:sync": "cap sync",
     "cap:android": "cap add android"
