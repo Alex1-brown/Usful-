@@ -5,6 +5,7 @@ on:
   push:
     branches:
       - main
+      - useful-pro
     tags:
       - 'v*'
 
@@ -93,7 +94,7 @@ jobs:
       - name: Upload Android artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: pocket-utility-android-1.0.0
+          name: useful-pro-android-2.0.0
           path: |
             android/app/build/outputs/apk/debug/app-debug.apk
             android/app/build/outputs/bundle/release/app-release.aab
