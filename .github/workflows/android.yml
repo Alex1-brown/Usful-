@@ -47,7 +47,7 @@ jobs:
           import re
           from pathlib import Path
           html = Path("www/index.html").read_text()
-          scripts = re.findall(r"<script(?:\\s[^>]*)?>(.*?)</script>", html, re.S | re.I)
+          scripts = re.findall(r"<script(?:\s[^>]*)?>(.*?)</script>", html, re.S | re.I)
           if not scripts:
               raise SystemExit("No JavaScript block found")
           Path("www/app.js").write_text(scripts[-1])
@@ -105,8 +105,8 @@ jobs:
           from pathlib import Path
           p = Path("app/build.gradle")
           s = p.read_text()
-          s, code_count = re.subn(r"versionCode\\s+\\d+", "versionCode 3", s, count=1)
-          s, name_count = re.subn(r"versionName\\s+[\"'][^\"']+[\"']", 'versionName "2.1.0"', s, count=1)
+          s, code_count = re.subn(r"versionCode\s+\d+", "versionCode 3", s, count=1)
+          s, name_count = re.subn(r"versionName\s+[\"'][^\"']+[\"']", 'versionName "2.1.0"', s, count=1)
           if code_count != 1 or name_count != 1:
               raise SystemExit("Could not set Android versionCode/versionName")
           p.write_text(s)
