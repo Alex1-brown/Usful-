@@ -1,16 +1,24 @@
-# Useful Pro 2.0.0
+# Useful Pro 2.1.0
 
 This is the separate development branch for the Useful Pro build. The stable `main` branch remains unchanged.
 
-## Added Pro features
+## Pro features in this build
 - Password generator: exclude look-alike characters and optionally prevent repeated characters.
-- Password strength estimate shown locally; password generation uses the device cryptographic random-number generator.
+- Password generation uses Web Crypto with rejection sampling and a Fisher–Yates shuffle; generated passwords are not saved.
+- Password-strength estimate is calculated locally.
 - Calculator: local history of up to 20 successful calculations, with a clear-history action.
-- Notes: export the current note as a plain-text TXT file.
-- English and Russian interface retained.
+- Notes: auto-save while typing and export the current note as a plain-text TXT file.
+- QR generator: UTF-8 text support, custom foreground/background colors, and 512 / 768 / 1024 px PNG export.
+- Timer reset label follows the selected English/Russian interface language.
 
 ## Privacy
-Calculation history and notes remain in the device's local storage unless the user exports a note. Generated passwords are not saved to history.
+Calculation history and notes remain in the device's local storage unless the user exports a note. QR data and generated passwords are processed locally. Generated passwords are not saved to history.
 
-## Important release status
-This branch adds the Pro feature set, but **Google Play Billing / paid activation is not integrated yet**. Do not advertise this build as payment-protected until a real purchase flow and server/store-side entitlement checks have been implemented and tested.
+## Release status
+- App display name: Useful Pro
+- Version name: 2.1.0
+- Android versionCode: 3
+- Application ID remains `com.alexbruno.pocketutility`
+- The development pull request is still a draft and is not merged into `main`.
+
+**Google Play Billing and purchase verification are not integrated.** Do not advertise paid access or distribute this build as payment-protected until a real purchase flow and entitlement checks have been implemented and tested.
