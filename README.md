@@ -1,0 +1,48 @@
+# Useful
+
+An offline-first utility app for Android, built with HTML, CSS, JavaScript and Capacitor 8.
+
+## Features
+- Password generator
+- Calculator
+- Unit converter
+- Notes stored locally
+- Countdown timer and stopwatch
+- Date difference calculator
+- Random number generator
+- Text analyzer
+- Offline QR-code generator
+
+The interface supports English and Russian.
+
+## Useful Pro development branch
+The `useful-pro-next` branch adds:
+- More password-generation controls and a local strength estimate
+- Calculation history
+- TXT export for notes
+- QR export at 512, 768 and 1024 px with custom colors and UTF-8 text
+
+The Pro branch is still under review. Google Play Billing and purchase verification are not implemented.
+
+## Privacy
+The main tools work locally and do not require a cloud AI service. Notes and calculation history use device-local storage. Generated passwords are not saved.
+
+## Android build
+The GitHub Actions workflow builds a debug APK and an unsigned release AAB.
+
+For a local build:
+1. Install Node.js 22 and Java 21.
+2. Run `npm install`.
+3. Run `mkdir -p www` and copy `index.html` to `www/index.html`.
+4. Run `npx cap add android`.
+5. From the `android` directory, run `./gradlew assembleDebug`.
+
+## Before publishing
+- Test the APK on a physical Android device.
+- Configure and protect the Android signing key.
+- Sign the AAB before production upload.
+- Complete the store listing and privacy disclosures.
+- If offering paid features, implement and test Google Play Billing and purchase verification first.
+
+## License
+No license has been specified yet. Do not assume permission to redistribute or reuse the source.
