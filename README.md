@@ -24,6 +24,9 @@ The `useful-pro-next` branch adds:
 
 The Pro branch is still under review. Google Play Billing and purchase verification are not implemented.
 
+## Testing
+Use [QA_TEST_PLAN.md](QA_TEST_PLAN.md) to test the debug APK on a physical Android device. A successful build does not replace device testing.
+
 ## Privacy
 The main tools work locally and do not require a cloud AI service. Notes and calculation history use device-local storage. Generated passwords are not saved.
 
