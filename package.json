@@ -1,8 +1,8 @@
 {
-  "name": "pocket-utility",
-  "version": "1.0.0",
+  "name": "useful-pro",
+  "version": "2.1.1",
   "private": true,
-  "description": "Pocket Utility - offline utility tools",
+  "description": "Useful Pro 2.1.1 - offline utility tools with enhanced QR export and timer fix",
   "scripts": {
     "cap:sync": "cap sync",
     "cap:android": "cap add android"

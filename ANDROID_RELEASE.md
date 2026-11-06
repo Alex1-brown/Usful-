@@ -1,45 +1,34 @@
-# Pocket Utility
+# Useful — Android release status
 
-Android packaging for the existing offline-first Pocket Utility web app.
-
-## Current release target
-
-- App name: Pocket Utility
+## Stable release on `main`
+- App display name: Useful
 - Version: 1.0.0
-- Android application ID: com.alexbruno.pocketutility
+- Application ID: `com.alexbruno.pocketutility`
 - Capacitor: 8.x
-- Target/compile SDK: Android 16 / API 36
-- Minimum Android version: API 24 in the Capacitor 8 project template
-- Main app data stays local in the WebView/localStorage.
+- Compile / target SDK: Android 16 / API 36
 
-## Build
+## Pro development branch
+- Branch: `useful-pro-next`
+- App display name: Useful Pro
+- Version: 2.1.1
+- Android versionCode: 4
+- Application ID is unchanged, so a correctly signed build can update the same installed app.
+- The Pro pull request is still a draft and has not been merged into `main`.
 
-The GitHub Actions workflow creates the Android project from the existing web app and produces:
+See [PRO_VERSION.md](PRO_VERSION.md) for the Pro feature list and limitations.
 
+## Build workflow
+The GitHub Actions workflow prepares the Android project from the existing web app and produces:
 - Debug APK for device testing
 - Release AAB for Google Play preparation
 
-The release AAB produced by this workflow is currently unsigned. Before production upload, configure a secure Android upload keystore/signing credentials in GitHub Actions or build/sign the release in Android Studio.
+The release AAB is currently unsigned. Before production upload, configure a secure Android upload keystore and signing credentials in GitHub Actions or build and sign the release in Android Studio.
 
-## Version updates
+## Google Play readiness
+Google Play Billing and purchase verification are not integrated. The Pro build must not be advertised as a paid, payment-protected version until purchase handling and entitlement checks are implemented and tested.
 
-For a Play Store update:
-
+For every Play Store update:
 1. Keep the same application ID.
-2. Increase versionCode for every upload.
-3. Increase versionName when appropriate (for example 1.0.0 -> 1.1.0).
+2. Increase `versionCode` for every upload.
+3. Increase `versionName` when appropriate.
 4. Keep the signing key unchanged.
-
-This preserves the installed app as the same application and allows normal Google Play updates.
-
-## Monetization plan
-
-Version 1.0.0 keeps the core utilities free.
-
-A later 1.1.x release can add:
-
-- QR PRO: Wi-Fi, contact, email, phone/SMS, customization, history and export.
-- Code Generator PRO: UUID, PIN, random strings, Base64, Hex and URL-safe tokens.
-- Google Play Billing for the PRO entitlement.
-
-No payment code is enabled in 1.0.0 yet.
