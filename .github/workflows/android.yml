@@ -5,6 +5,14 @@ on:
   pull_request:
     branches:
       - main
+    paths:
+      - 'index.html'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'capacitor.config.ts'
+      - 'android/**'
+      - 'tests/**'
+      - '.github/workflows/android.yml'
   push:
     branches:
       - main
@@ -12,6 +20,18 @@ on:
       - useful-pro-next
     tags:
       - 'v*'
+    paths:
+      - 'index.html'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'capacitor.config.ts'
+      - 'android/**'
+      - 'tests/**'
+      - '.github/workflows/android.yml'
+
+concurrency:
+  group: android-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build:
