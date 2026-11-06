@@ -57,6 +57,9 @@ jobs:
           PY
           node --check www/app.js
 
+      - name: Run timer regression test
+        run: node tests/timer-regression.cjs
+
       - name: Apply Useful launcher icon
         working-directory: android
         run: |
