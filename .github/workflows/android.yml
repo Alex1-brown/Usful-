@@ -80,6 +80,9 @@ jobs:
       - name: Run timer regression test
         run: node tests/timer-regression.cjs
 
+      - name: Run calculator regression test
+        run: node tests/calculator-regression.cjs
+
       - name: Apply Useful launcher icon
         working-directory: android
         run: |
