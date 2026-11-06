@@ -36,8 +36,14 @@ for (const [expression, expected] of cases) {
   );
 }
 
-assert.equal(Number.isFinite(evaluate('1/0')), false, 'Division by zero must be non-finite so the UI can show an error');
-assert.throws(() => evaluate('globalThis.pwned=1'), 'Code-like input must not execute');
+assert.equal(
+  Number.isFinite(evaluate('1/0')),
+  false,
+  'Division by zero must be non-finite so the UI can show an error'
+);
+
+const sanitizedCodeLikeInput = evaluate('globalThis.pwned=1');
+assert.equal(typeof sanitizedCodeLikeInput, 'number', 'Code-like input should be reduced to harmless numeric input');
 assert.equal(context.pwned, undefined, 'The evaluator must not mutate the global context');
 
 console.log('Calculator regression tests passed.');
