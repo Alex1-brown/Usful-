@@ -111,8 +111,8 @@ jobs:
           from pathlib import Path
           p = Path("app/build.gradle")
           s = p.read_text()
-          s, code_count = re.subn(r"versionCode\s+\d+", "versionCode 3", s, count=1)
-          s, name_count = re.subn(r"versionName\s+[\"'][^\"']+[\"']", 'versionName "2.1.0"', s, count=1)
+          s, code_count = re.subn(r"versionCode\s+\d+", "versionCode 4", s, count=1)
+          s, name_count = re.subn(r"versionName\s+[\"'][^\"']+[\"']", 'versionName "2.1.1"', s, count=1)
           if code_count != 1 or name_count != 1:
               raise SystemExit("Could not set Android versionCode/versionName")
           p.write_text(s)
@@ -129,7 +129,7 @@ jobs:
       - name: Upload Android artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: useful-pro-android-2.1.0
+          name: useful-pro-android-2.1.1
           path: |
             android/app/build/outputs/apk/debug/app-debug.apk
             android/app/build/outputs/bundle/release/app-release.aab
