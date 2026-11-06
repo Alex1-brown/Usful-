@@ -1,4 +1,4 @@
-# Useful Pro 2.1.0 — Physical Device QA Plan
+# Useful Pro 2.1.1 — Physical Device QA Plan
 
 This checklist is for testing the Android debug APK on a real device before any public release. A successful GitHub Actions build proves that the project compiles; it does not prove that every feature works on a phone.
 
@@ -7,7 +7,7 @@ This checklist is for testing the Android debug APK on a real device before any 
 Record before testing:
 - Device model:
 - Android version:
-- APK version: 2.1.0 (versionCode 3)
+- APK version: 2.1.1 (versionCode 4)
 - Install type: clean install / update over previous Useful
 - Test date:
 - Tester:
@@ -108,6 +108,15 @@ For each failure, record:
 - Android version and device model:
 
 Do not mark a test as passed unless it was performed on a physical device.
+
+## Automated checks in GitHub Actions
+
+The workflow runs these automated checks before packaging:
+- JavaScript syntax validation.
+- Countdown timer regression test, including restart after expiry with a newly entered duration.
+- Calculator regression test for arithmetic, parentheses, percentage conventions, division by zero, and rejected code-like input.
+
+Passing these checks verifies only the tested JavaScript logic and build process. It does not replace physical-device testing.
 
 ## Release blockers — not completed by this QA document
 
