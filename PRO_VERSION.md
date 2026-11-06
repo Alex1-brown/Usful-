@@ -1,4 +1,4 @@
-# Useful Pro 2.1.0
+# Useful Pro 2.1.1
 
 This is the separate development branch for the Useful Pro build. The stable `main` branch remains unchanged.
 
@@ -16,8 +16,8 @@ Calculation history and notes remain in the device's local storage unless the us
 
 ## Release status
 - App display name: Useful Pro
-- Version name: 2.1.0
-- Android versionCode: 3
+- Version name: 2.1.1
+- Android versionCode: 4
 - Application ID remains `com.alexbruno.pocketutility`
 - The development pull request is still a draft and is not merged into `main`.
 
