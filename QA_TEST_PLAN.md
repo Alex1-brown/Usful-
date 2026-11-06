@@ -75,6 +75,7 @@ Record before testing:
 - [ ] Start, pause, resume, and reset the countdown timer.
 - [ ] Test zero seconds and a multi-minute countdown.
 - [ ] Confirm the completion state is visible and the timer does not continue into negative time.
+- [ ] After the timer expires, change the minute/second inputs and press Start; verify the new duration is used without requiring an extra reset.
 - [ ] Change language and verify timer labels follow it.
 - [ ] Start, stop, and reset the stopwatch.
 - [ ] Leave and reopen the tool; verify the displayed state is sensible.
