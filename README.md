@@ -22,13 +22,17 @@ The `useful-pro-next` branch adds:
 - TXT export for notes
 - QR export at 512, 768 and 1024 px with custom colors and UTF-8 text
 
-The Pro branch is still under review. Google Play Billing and purchase verification are not implemented.
+The Pro branch is still under review. Version 2.1.1 adds a countdown restart fix, automatic note saving, QR PNG export at three sizes, custom QR colors, and UTF-8 QR content. Google Play Billing and purchase verification are not implemented.
 
 ## Testing
 Use [QA_TEST_PLAN.md](QA_TEST_PLAN.md) to test the debug APK on a physical Android device. A successful build does not replace device testing.
 
 ## Privacy
 The main tools work locally and do not require a cloud AI service. Notes and calculation history use device-local storage. Generated passwords are not saved.
+
+## Automated checks
+
+GitHub Actions validates JavaScript syntax and runs the timer and calculator regression tests before building the debug APK and unsigned release AAB.
 
 ## Android build
 The GitHub Actions workflow builds a debug APK and an unsigned release AAB.
