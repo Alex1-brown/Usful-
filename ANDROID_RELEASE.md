@@ -10,8 +10,8 @@
 ## Pro development branch
 - Branch: `useful-pro-next`
 - App display name: Useful Pro
-- Version: 2.1.0
-- Android versionCode: 3
+- Version: 2.1.1
+- Android versionCode: 4
 - Application ID is unchanged, so a correctly signed build can update the same installed app.
 - The Pro pull request is still a draft and has not been merged into `main`.
 
