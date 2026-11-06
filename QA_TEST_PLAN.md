@@ -72,6 +72,8 @@ Record before testing:
 
 ## 7. Timer and stopwatch
 
+The GitHub Actions workflow also runs `tests/timer-regression.cjs` to check that a completed countdown can be restarted with newly entered duration values.
+
 - [ ] Start, pause, resume, and reset the countdown timer.
 - [ ] Test zero seconds and a multi-minute countdown.
 - [ ] Confirm the completion state is visible and the timer does not continue into negative time.
