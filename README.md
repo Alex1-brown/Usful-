@@ -22,7 +22,7 @@ The `useful-pro-next` branch adds:
 - TXT export for notes
 - QR export at 512, 768 and 1024 px with custom colors and UTF-8 text
 
-The Pro branch is still under review. Version 2.1.1 adds a countdown restart fix, automatic note saving, QR PNG export at three sizes, custom QR colors, and UTF-8 QR content. Google Play Billing and purchase verification are not implemented.
+The Pro branch is still under review. Version 2.1.1 adds a countdown restart fix, automatic note saving, QR PNG export at three sizes, custom QR colors, and UTF-8 QR content. Google Play Billing and purchase verification are not implemented. A bilingual privacy-policy draft is available in [privacy-policy.html](privacy-policy.html); it must be hosted at a public URL before Play Store submission.
 
 ## Testing
 Use [QA_TEST_PLAN.md](QA_TEST_PLAN.md) to test the debug APK on a physical Android device. A successful build does not replace device testing.
